@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.RequireItemMapper">
+    <insert id="addRequireItem" parameterType="RequireItem" useGeneratedKeys="true" keyProperty="ritemid">
+        insert into trade.requires (ritemname, detail, price, date, host)
+        values (#{ritemname},#{detail},#{price},#{date},#{host})
+    </insert>
+    
+    <delete id="deleteRequireItem" parameterType="int">
+        delete from trade.requires where ritemid = #{ritemid}
+    </delete>
+    
+    <update id="updateRequireItem" parameterType="RequireItem">
+        update trade.requires
+        set ritemname = #{ritemname},detail=#{detail},price = #{price},date = #{date}
+        where ritemid = #{ritemid}
+    </update>
+    
+    <select id="queryRequireItemByName" resultType="RequireItem">
+        select * from trade.requires
+        where ritemname like concat('%',#{ritemname},'%')
+    </select>
+    
+    <select id="queryRequireItemByHost" resultType="RequireItem">
+        select * from trade.requires
+        where host = #{host}
+    </select>
+    
+    <select id="queryAllRequireItem" resultType="RequireItem">
+        select * from trade.requires
+    </select>
+    
+    <select id="queryRequireItemById" resultType="RequireItem">
+        select * from trade.requires
+        where ritemid = #{ritemid}
+    </select>
+    
+</mapper>

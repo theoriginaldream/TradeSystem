@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.CommentMapper">
+    <insert id="addComment" parameterType="Comment" useGeneratedKeys="true" keyProperty="commentid">
+        insert into trade.comment (itemid, userid, comment, datetime)
+        values (#{itemid},#{userid},#{comment},#{datetime})
+    </insert>
+    
+    <delete id="deleteComment" parameterType="int">
+        delete from trade.comment where commentid = #{commentid}
+    </delete>
+    
+    <select id="queryCommentByItemid" resultType="Comment">
+        select * from trade.comment
+        where itemid = #{itemid}
+        order by datetime desc
+    </select>
+    
+    <select id="queryCommentByHost" resultType="Comment">
+        select * from trade.comment
+        where userid = #{userid}
+        order by datetime desc
+    </select>
+    
+    <select id="queryCommentById" resultType="Comment">
+        select * from trade.comment
+        where commentid = #{commentid}
+        order by datetime desc
+    </select>
+
+</mapper>

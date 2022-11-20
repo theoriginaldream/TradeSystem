@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.HeadPictureMapper">
+    <insert id="addHeadPicture" parameterType="String">
+        insert into trade.headpicture (userid, headpicture)
+        values (#{userid},#{headpicture})
+    </insert>
+    
+    <update id="updateHeadPicture" parameterType="String">
+        update trade.headpicture
+        set headpicture = #{headpicture}
+        where userid = #{userid}
+    </update>
+    
+    <select id="queryHeadPicture" resultType="HeadPicture">
+        select * from trade.headpicture
+        where userid = #{userid}
+    </select>
+</mapper>
