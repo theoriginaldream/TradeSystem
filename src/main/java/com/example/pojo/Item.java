@@ -1,0 +1,88 @@
+package com.example.pojo;
+
+public class Item{
+    private int itemid;
+    private String itemname;
+    private String schoolzone;
+    private String detail;
+    private String price;
+    private String host;
+    private ItemPicture itempicture;
+
+    public Item() {
+    }
+
+    public Item(int itemid, String itemname, String schoolzone, String detail, String price, String host, ItemPicture itempicture) {
+        this.itemid = itemid;
+        this.itemname = itemname;
+        this.schoolzone = schoolzone;
+        this.detail = detail;
+        this.price = price;
+        this.itempicture = itempicture;
+    }
+
+    public Item(int itemid, String itemname, String schoolzone, String detail, String price, String host) {
+        this.itemid = itemid;
+        this.itemname = itemname;
+        this.schoolzone = schoolzone;
+        this.detail = detail;
+        this.price = price;
+        this.host = host;
+    }
+
+    public int getItemid() {
+        return itemid;
+    }
+
+    public void setItemid(int itemid) {
+        this.itemid = itemid;
+    }
+
+    public String getItemname() {
+        return itemname;
+    }
+
+    public void setItemname(String itemname) {
+        this.itemname = itemname;
+    }
+
+    public String getSchoolzone() {
+        return schoolzone;
+    }
+
+    public void setSchoolzone(String schoolzone) {
+        this.schoolzone = schoolzone;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public ItemPicture getItempicture() {
+        return itempicture;
+    }
+
+    public void setItempicture(ItemPicture itempicture) {
+        this.itempicture = itempicture;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+}

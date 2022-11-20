@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.ItemPictureMapper">
+    <insert id="addItemPicture" parameterType="ItemPicture">
+        insert into trade.itempicture (itemid, itempicture, itempicture2, itempicture3, itempicture4, itempicture5)
+        values (#{itemid},#{itempicture},#{itempicture2},#{itempicture3},#{itempicture4},#{itempicture5})
+    </insert>
+    
+    <delete id="deleteItemPicture" parameterType="int">
+        delete from trade.itempicture where itemid = #{itemid}
+    </delete>
+    
+    <update id="updateItemPicture" parameterType="ItemPicture">
+        update trade.itempicture
+        set itempicture = #{itempicture},itempicture2 = #{itempicture2},itempicture3 = #{itempicture3},itempicture4 = #{itempicture4},itempicture5 = #{itempicture5}
+        where itemid = #{itemid}
+    </update>
+    
+    <select id="queryItemPicture" resultType="ItemPicture">
+        select * from trade.itempicture
+        where itemid = #{itemid}
+    </select>
+</mapper>
