@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="TradeSystem:war exploded">
-    <output-path>$PROJECT_DIR$/out/artifacts/TradeSystem_war_exploded</output-path>
+    <output-path>$PROJECT_DIR$/src/main/webapp</output-path>
     <root id="root">
       <element id="javaee-facet-resources" facet="TradeSystem/web/Web" />
       <element id="directory" name="WEB-INF">

@@ -1,33 +1,42 @@
 package com.example.pojo;
 
+import java.util.Date;
+
 public class Item{
     private int itemid;
     private String itemname;
     private String schoolzone;
+    private String type;
     private String detail;
     private String price;
     private String host;
     private ItemPicture itempicture;
+    private Date datetime;
 
     public Item() {
     }
 
-    public Item(int itemid, String itemname, String schoolzone, String detail, String price, String host, ItemPicture itempicture) {
+    public Item(int itemid, String itemname, String schoolzone, String type, String detail, String price, String host,Date datetime, ItemPicture itempicture) {
         this.itemid = itemid;
         this.itemname = itemname;
         this.schoolzone = schoolzone;
-        this.detail = detail;
-        this.price = price;
-        this.itempicture = itempicture;
-    }
-
-    public Item(int itemid, String itemname, String schoolzone, String detail, String price, String host) {
-        this.itemid = itemid;
-        this.itemname = itemname;
-        this.schoolzone = schoolzone;
+        this.type = type;
         this.detail = detail;
         this.price = price;
         this.host = host;
+        this.datetime = datetime;
+        this.itempicture = itempicture;
+    }
+
+    public Item(int itemid, String itemname, String schoolzone, String type, String detail, String price, String host,Date datetime) {
+        this.itemid = itemid;
+        this.itemname = itemname;
+        this.schoolzone = schoolzone;
+        this.type = type;
+        this.detail = detail;
+        this.price = price;
+        this.host = host;
+        this.datetime = datetime;
     }
 
     public int getItemid() {
@@ -84,5 +93,21 @@ public class Item{
 
     public void setHost(String host) {
         this.host = host;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Date getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(Date datetime) {
+        this.datetime = datetime;
     }
 }

@@ -29,5 +29,11 @@
         where commentid = #{commentid}
         order by datetime desc
     </select>
+    
+    <select id="queryCommentByItemHost" resultType="Comment">
+        select commentid, comment.itemid, userid, comment, datetime
+        from trade.comment,trade.items
+        where comment.itemid = items.itemid and items.host = #{userid}
+    </select>
 
 </mapper>

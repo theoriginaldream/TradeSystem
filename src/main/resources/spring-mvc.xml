@@ -68,22 +68,22 @@
     </bean>
     
     
-    <mvc:interceptors>
-        <mvc:interceptor>
-            <mvc:mapping path="/**"/>
-            <mvc:exclude-mapping path="/login/toLogin"/>
-            <mvc:exclude-mapping path="/login/toRegister"/>
-            <mvc:exclude-mapping path="/login/register"/>
-            <mvc:exclude-mapping path="/login/userLogin"/>
-            <mvc:exclude-mapping path="/user/toUpdatePassword"/>
-            <mvc:exclude-mapping path="/user/updatePwd"/>
-            <mvc:exclude-mapping path="/swagger-ui.html/**"/>
-            <mvc:exclude-mapping path="/doc.html/**"/>
-            <mvc:exclude-mapping path="/swagger-resources/**"/>
-            <mvc:exclude-mapping path="/webjars/**"/>
-            <mvc:exclude-mapping path="/v2/**"/>
-            <bean class="com.example.config.LoginHandlerInterceptor"/>
-        </mvc:interceptor>
-    </mvc:interceptors>
+    <!--<mvc:interceptors>-->
+    <!--    <mvc:interceptor>-->
+    <!--        <mvc:mapping path="/**"/>-->
+    <!--        <mvc:exclude-mapping path="/login/toLogin"/>-->
+    <!--        <mvc:exclude-mapping path="/login/toRegister"/>-->
+    <!--        <mvc:exclude-mapping path="/login/register"/>-->
+    <!--        <mvc:exclude-mapping path="/login/userLogin"/>-->
+    <!--        <mvc:exclude-mapping path="/user/toUpdatePassword"/>-->
+    <!--        <mvc:exclude-mapping path="/user/updatePwd"/>-->
+    <!--        <mvc:exclude-mapping path="/swagger-ui.html/**"/>-->
+    <!--        <mvc:exclude-mapping path="/doc.html/**"/>-->
+    <!--        <mvc:exclude-mapping path="/swagger-resources/**"/>-->
+    <!--        <mvc:exclude-mapping path="/webjars/**"/>-->
+    <!--        <mvc:exclude-mapping path="/v2/**"/>-->
+    <!--        <bean class="com.example.config.LoginHandlerInterceptor"/>-->
+    <!--    </mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
 
 </beans>

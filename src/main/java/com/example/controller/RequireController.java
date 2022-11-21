@@ -3,9 +3,11 @@ package com.example.controller;
 import com.example.pojo.Comment;
 import com.example.pojo.ItemPicture;
 import com.example.pojo.RequireItem;
+import com.example.pojo.User;
 import com.example.service.CommentService;
 import com.example.service.ItemPictureService;
 import com.example.service.RequireItemService;
+import com.example.service.UserService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,6 +31,10 @@ public class RequireController {
     private RequireItemService requireItemService;
 
     @Autowired
+    @Qualifier("userServiceImpl")
+    private UserService userService;
+
+    @Autowired
     @Qualifier("itemPictureServiceImpl")
     private ItemPictureService itemPictureService;
 
@@ -43,7 +49,14 @@ public class RequireController {
 
     @RequestMapping(value = "/add/require",method = RequestMethod.POST)
     @ResponseBody
-    public String addRequire(String ritemname, String detail, String price, MultipartFile[] pictures, HttpSession session) throws IOException {
+    public String addRequire(@RequestParam("ritemname") String ritemname,@RequestParam(value = "detail",required = false) String detail,
+                             @RequestParam(value = "price",required = false) String price,
+                             @RequestParam(value = "picture1",required = false) MultipartFile picture1,
+                             @RequestParam(value = "picture2",required = false) MultipartFile picture2,
+                             @RequestParam(value = "picture3",required = false) MultipartFile picture3,
+                             @RequestParam(value = "picture4",required = false) MultipartFile picture4,
+                             @RequestParam(value = "picture5",required = false) MultipartFile picture5,
+                             HttpSession session) throws IOException {
         String host = (String) session.getAttribute("admin");
         RequireItem requireItem = new RequireItem();
         requireItem.setRitemname(ritemname);
@@ -60,7 +73,7 @@ public class RequireController {
         itemPicture.setItemid(requireItem.getRitemid());
         int count = 0;
 
-        for (MultipartFile picture : pictures) {
+        for (MultipartFile picture : Arrays.asList(picture1,picture2,picture3,picture4,picture5)) {
             count++;
             String oldFileName = picture.getOriginalFilename();
 
@@ -97,9 +110,7 @@ public class RequireController {
         List<RequireItem> requireItemList = requireItemService.queryAllRequireItem();
 
         for (RequireItem requireItem : requireItemList) {
-            if (itemPictureService.queryItemPicture(requireItem.getRitemid())!=null){
-                requireItem.setItemPicture(itemPictureService.queryItemPicture(requireItem.getRitemid()));
-            }
+            requireItem.setItemPicture(itemPictureService.queryItemPicture(requireItem.getRitemid()));
         }
 
 //        model.addAttribute("requireItemList",requireItemList);
@@ -111,14 +122,15 @@ public class RequireController {
     @ResponseBody
     public Map<String,Object> OneRequire(@PathVariable("ritemid") int ritemid, Model model){
         RequireItem requireItem = requireItemService.queryRequireItemById(ritemid);
-        if (itemPictureService.queryItemPicture(ritemid) != null) {
-            ItemPicture itemPicture = itemPictureService.queryItemPicture(ritemid);
-            requireItem.setItemPicture(itemPicture);
-        }
+        requireItem.setItemPicture(itemPictureService.queryItemPicture(ritemid));
 
         Map<String,Object> map = new HashMap<>();
 
         map.put("requireItem",requireItem);
+
+        User user = userService.queryUserByName(requireItem.getHost());
+
+        map.put("user",user);
 
         List<Comment> comments = commentService.queryCommentByItemid(ritemid);
 
@@ -145,7 +157,15 @@ public class RequireController {
 
     @RequestMapping(value = "/update/require",method = RequestMethod.POST)
     @ResponseBody
-    public String updateRequire(@RequestParam("ritemid") int ritemid,@RequestParam("ritemname") String ritemname,@RequestParam("detail") String detail,@RequestParam("price") String price,@RequestParam("pictures") MultipartFile[] pictures,HttpSession session,Model model) throws IOException {
+    public String updateRequire(@RequestParam("ritemid") int ritemid,@RequestParam("ritemname") String ritemname,
+                                @RequestParam(value = "detail",required = false) String detail,
+                                @RequestParam(value = "price",required = false) String price,
+                                @RequestParam(value = "picture1",required = false) MultipartFile picture1,
+                                @RequestParam(value = "picture2",required = false) MultipartFile picture2,
+                                @RequestParam(value = "picture3",required = false) MultipartFile picture3,
+                                @RequestParam(value = "picture4",required = false) MultipartFile picture4,
+                                @RequestParam(value = "picture5",required = false) MultipartFile picture5,
+                                HttpSession session,Model model) throws IOException {
         RequireItem requireItem = requireItemService.queryRequireItemById(ritemid);
         requireItem.setRitemname(ritemname);
         requireItem.setDetail(detail);
@@ -157,7 +177,7 @@ public class RequireController {
         int count = 0;
         ItemPicture itemPicture = itemPictureService.queryItemPicture(ritemid);
         if (itemPicture!=null){
-            for (MultipartFile picture : pictures) {
+            for (MultipartFile picture : Arrays.asList(picture1,picture2,picture3,picture4,picture5)) {
                 count ++;
                 String oldFileName = picture.getOriginalFilename();
 
@@ -220,7 +240,7 @@ public class RequireController {
             itemPictureService.updateItemPicture(itemPicture);
         }else {
             itemPicture = new ItemPicture();
-            for (MultipartFile picture : pictures) {
+            for (MultipartFile picture : Arrays.asList(picture1,picture2,picture3,picture4,picture5)) {
                 count ++;
                 String oldFileName = picture.getOriginalFilename();
 
@@ -250,7 +270,7 @@ public class RequireController {
         return "success";
     }
 
-    @RequestMapping(value = "/delete/{ritemid}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{ritemid}",method = RequestMethod.POST)
     @ResponseBody
     public String deleteRequireItem(@PathVariable("ritemid") int ritemid,HttpSession session){
         requireItemService.deleteRequireItem(ritemid);
@@ -318,9 +338,7 @@ public class RequireController {
         List<RequireItem> requireItemList = requireItemService.queryRequireItemByHost(host);
 
         for (RequireItem requireItem : requireItemList) {
-            if (itemPictureService.queryItemPicture(requireItem.getRitemid()) != null) {
-                requireItem.setItemPicture(itemPictureService.queryItemPicture(requireItem.getRitemid()));
-            }
+            requireItem.setItemPicture(itemPictureService.queryItemPicture(requireItem.getRitemid()));
         }
 
 //        model.addAttribute("requireItemList", requireItemList);
@@ -335,9 +353,7 @@ public class RequireController {
         List<RequireItem> requireItemList = requireItemService.queryRequireItemByHost(userid);
 
         for (RequireItem requireItem : requireItemList) {
-            if (itemPictureService.queryItemPicture(requireItem.getRitemid()) != null) {
-                requireItem.setItemPicture(itemPictureService.queryItemPicture(requireItem.getRitemid()));
-            }
+            requireItem.setItemPicture(itemPictureService.queryItemPicture(requireItem.getRitemid()));
         }
 
 //        model.addAttribute("requireItemList", requireItemList);
