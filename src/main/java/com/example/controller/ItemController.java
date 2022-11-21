@@ -64,7 +64,7 @@ public class ItemController {
         item.setPrice(price);
         String host = (String) session.getAttribute("admin");
         item.setHost(host);
-        System.out.println(host);
+        item.setDatetime(new Date());
         itemService.addItem(item);
 
         ItemPicture itemPicture = new ItemPicture();
@@ -172,6 +172,7 @@ public class ItemController {
         item.setType(type);
         item.setDetail(detail);
         item.setPrice(price);
+        item.setDatetime(new Date());
         itemService.updateItem(item);
 
 //        List<MultipartFile> pictures = Stream.of(itempicture,itempicture2,itempicture3,itempicture4,itempicture5).collect(Collectors.toList());
