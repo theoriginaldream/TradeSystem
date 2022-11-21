@@ -83,4 +83,26 @@ public class LoginController{
 
     }
 
+    @RequestMapping(value = "/update/pwd",method = RequestMethod.POST)
+    @ResponseBody
+    public String updatePassword(@RequestParam("userid")String userid,@RequestParam("phone") String phone,@RequestParam("password") String password,@RequestParam("password2") String password2){
+
+        if (userService.queryUserByName(userid)!=null){
+            User user = userService.queryUserByName(userid);
+            if (phone.equals(user.getPhone())){
+                if (password.equals(password2)){
+                    user.setPassword(password);
+                    userService.updateUser(user);
+                    return "success";
+                }else {
+                    return "error";
+                }
+            }else {
+                return "error";
+            }
+        }else {
+            return "error";
+        }
+    }
+
 }

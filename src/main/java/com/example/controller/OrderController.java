@@ -1,8 +1,10 @@
 package com.example.controller;
 
 import com.example.pojo.Item;
+import com.example.pojo.ItemPicture;
 import com.example.pojo.Order;
 import com.example.pojo.OrderItem;
+import com.example.service.ItemPictureService;
 import com.example.service.ItemService;
 import com.example.service.OrderService;
 import com.example.service.RequireItemService;
@@ -31,6 +33,10 @@ public class OrderController {
     private RequireItemService requireItemService;
 
     @Autowired
+    @Qualifier("itemPictureServiceImpl")
+    private ItemPictureService itemPictureService;
+
+    @Autowired
     @Qualifier("orderServiceImpl")
     private OrderService orderService;
 
@@ -50,7 +56,7 @@ public class OrderController {
         return "success";
     }
 
-    @RequestMapping(value = "/delete/{orderid}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{orderid}",method = RequestMethod.POST)
     @ResponseBody
     public String deleteOrder(@PathVariable("orderid") int orderid,HttpSession session){
         String admin = (String) session.getAttribute("admin");
@@ -96,8 +102,9 @@ public class OrderController {
             orderItem.setDatetime(order.getDatetime());
             Item item = itemService.queryItemById(order.getItemid());
             orderItem.setItemname(item.getItemname());
-            orderItem.setItempicture(item.getItempicture());
             orderItem.setPrice(item.getPrice());
+            ItemPicture itemPicture = itemPictureService.queryItemPicture(order.getItemid());
+            orderItem.setItempicture(itemPicture);
             orders.add(orderItem);
         }
 
@@ -111,8 +118,9 @@ public class OrderController {
             orderItem.setDatetime(order.getDatetime());
             Item item = itemService.queryItemById(order.getItemid());
             orderItem.setItemname(item.getItemname());
-            orderItem.setItempicture(item.getItempicture());
             orderItem.setPrice(item.getPrice());
+            ItemPicture itemPicture = itemPictureService.queryItemPicture(order.getItemid());
+            orderItem.setItempicture(itemPicture);
             orders.add(orderItem);
         }
 
@@ -134,8 +142,9 @@ public class OrderController {
             orderItem.setDatetime(order.getDatetime());
             Item item = itemService.queryItemById(order.getItemid());
             orderItem.setItemname(item.getItemname());
-            orderItem.setItempicture(item.getItempicture());
             orderItem.setPrice(item.getPrice());
+            ItemPicture itemPicture = itemPictureService.queryItemPicture(order.getItemid());
+            orderItem.setItempicture(itemPicture);
             return orderItem;
         }else {
             return orderItem;

@@ -4,6 +4,7 @@ public class Item{
     private int itemid;
     private String itemname;
     private String schoolzone;
+    private String type;
     private String detail;
     private String price;
     private String host;
@@ -12,19 +13,22 @@ public class Item{
     public Item() {
     }
 
-    public Item(int itemid, String itemname, String schoolzone, String detail, String price, String host, ItemPicture itempicture) {
+    public Item(int itemid, String itemname, String schoolzone, String type, String detail, String price, String host, ItemPicture itempicture) {
         this.itemid = itemid;
         this.itemname = itemname;
         this.schoolzone = schoolzone;
+        this.type = type;
         this.detail = detail;
         this.price = price;
+        this.host = host;
         this.itempicture = itempicture;
     }
 
-    public Item(int itemid, String itemname, String schoolzone, String detail, String price, String host) {
+    public Item(int itemid, String itemname, String schoolzone, String type, String detail, String price, String host) {
         this.itemid = itemid;
         this.itemname = itemname;
         this.schoolzone = schoolzone;
+        this.type = type;
         this.detail = detail;
         this.price = price;
         this.host = host;
@@ -84,5 +88,13 @@ public class Item{
 
     public void setHost(String host) {
         this.host = host;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

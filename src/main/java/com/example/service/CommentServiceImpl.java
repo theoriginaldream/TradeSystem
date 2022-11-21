@@ -37,4 +37,9 @@ public class CommentServiceImpl implements CommentService{
     public Comment queryCommentById(int commentid) {
         return commentMapper.queryCommentById(commentid);
     }
+
+    @Override
+    public List<Comment> queryCommentByItemHost(String userid) {
+        return commentMapper.queryCommentByItemHost(userid);
+    }
 }

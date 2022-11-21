@@ -15,4 +15,6 @@ public interface CommentService {
     List<Comment> queryCommentByHost(String userid);
 
     Comment queryCommentById(int commentid);
+
+    List<Comment> queryCommentByItemHost(String userid);
 }

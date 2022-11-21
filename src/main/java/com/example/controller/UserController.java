@@ -1,7 +1,9 @@
 package com.example.controller;
 
+import com.example.pojo.Comment;
 import com.example.pojo.HeadPicture;
 import com.example.pojo.User;
+import com.example.service.CommentService;
 import com.example.service.HeadPictureService;
 import com.example.service.ShoppingCartService;
 import com.example.service.UserService;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -36,6 +39,10 @@ public class UserController {
     @Qualifier("shoppingCartServiceImpl")
     private ShoppingCartService shoppingCartService;
 
+    @Autowired
+    @Qualifier("commentServiceImpl")
+    private CommentService commentService;
+
     @RequestMapping(value = "/user",method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> userShow(HttpSession session, Model model){
@@ -47,10 +54,9 @@ public class UserController {
         map.put("user",user);
 //        model.addAttribute("user",user);
 
-        if (headPictureService.queryHeadPicture(userid)!=null){
 //            model.addAttribute("headpicture",headPictureService.queryHeadPicture(userid).getHeadpicture());
-            map.put("headpicture",headPictureService.queryHeadPicture(userid));
-        }
+        map.put("headpicture",headPictureService.queryHeadPicture(userid));
+
         return map;
     }
 
@@ -65,10 +71,9 @@ public class UserController {
 
 //        model.addAttribute("user",user);
 
-        if (headPictureService.queryHeadPicture(userid)!=null){
 //            model.addAttribute("headpicture",headPictureService.queryHeadPicture(userid).getHeadpicture());
-            map.put("headpicture",headPictureService.queryHeadPicture(userid));
-        }
+        map.put("headpicture",headPictureService.queryHeadPicture(userid));
+
         return map;
     }
 
@@ -77,9 +82,10 @@ public class UserController {
 //        return "updatePwd";
 //    }
 
-    @RequestMapping(value = "/update/pwd",method = RequestMethod.PUT)
+    @RequestMapping(value = "/update/pwd",method = RequestMethod.POST)
     @ResponseBody
-    public String updatepwd(@RequestParam("oldpwd") String oldpwd,@RequestParam("password") String password,@RequestParam("password2") String password2,HttpSession session,Model model){
+    public String updatepwd(@RequestParam("oldpwd") String oldpwd,@RequestParam("password") String password,
+                            @RequestParam("password2") String password2,HttpSession session,Model model){
         String userid = (String) session.getAttribute("admin");
         User user = userService.queryUserByName(userid);
         String oldPassword = user.getPassword();
@@ -98,41 +104,51 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/update/user",method = RequestMethod.PUT)
+    @RequestMapping(value = "/update/user",method = RequestMethod.POST)
     @ResponseBody
-    public String updateUser(@RequestParam("userid") String userid, @RequestParam("name") String name, @RequestParam("schoolzone") String schoolzone, @RequestParam("introduce") String introduce, @RequestParam("headpicture") MultipartFile headpicture, HttpSession session, Model model) throws IOException {
-        User user = userService.queryUserByName(userid);
-        user.setName(name);
-        user.setSchoolzone(schoolzone);
-        user.setIntroduce(introduce);
-        userService.updateUser(user);
+    public String updateUser(@RequestParam("userid") String userid, @RequestParam(value = "name",required = false) String name,
+                             @RequestParam(value = "schoolzone",required = false) String schoolzone,
+                             @RequestParam(value = "introduce",required = false) String introduce,
+                             @RequestParam(value = "headpicture",required = false) MultipartFile headpicture,
+                             HttpSession session, Model model) throws IOException {
+        String admin = (String) session.getAttribute("admin");
+        if (userid.equals(admin)){
+            User user = userService.queryUserByName(userid);
+            user.setName(name);
+            user.setSchoolzone(schoolzone);
+            user.setIntroduce(introduce);
+            userService.updateUser(user);
 
-        String oldFileName = headpicture.getOriginalFilename();
+            String oldFileName = headpicture.getOriginalFilename();
 
-        String filePath = session.getServletContext().getRealPath("upload");
+            String filePath = session.getServletContext().getRealPath("pictures");
 
-        if (headpicture!=null && oldFileName!=null && oldFileName.length()>0) {
-            String newFileName = UUID.randomUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
+            if (headpicture!=null && oldFileName!=null && oldFileName.length()>0) {
+                String newFileName = UUID.randomUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
 
-            if (headPictureService.queryHeadPicture(userid)!=null){
-                String oldHeadPicture = headPictureService.queryHeadPicture(userid).getHeadpicture();
+                if (headPictureService.queryHeadPicture(userid)!=null){
+                    String oldHeadPicture = headPictureService.queryHeadPicture(userid).getHeadpicture();
 
-                headPictureService.updateHeadPicture(userid,newFileName);
+                    headPictureService.updateHeadPicture(userid,newFileName);
 
-                String oldHeadPicturePath = filePath + "/" + oldHeadPicture;
-                File oldFile = new File(oldHeadPicturePath);
-                if (oldFile.exists()){
-                    boolean delete = oldFile.delete();
+                    String oldHeadPicturePath = filePath + "/" + oldHeadPicture;
+                    File oldFile = new File(oldHeadPicturePath);
+                    if (oldFile.exists()){
+                        boolean delete = oldFile.delete();
+                    }
+                }else {
+                    headPictureService.addHeadPicture(userid,newFileName);
                 }
-            }else {
-                headPictureService.addHeadPicture(userid,newFileName);
+
+                File newFile = new File(filePath + "/" + newFileName);
+                headpicture.transferTo(newFile);
             }
 
-            File newFile = new File(filePath + "/" + newFileName);
-            headpicture.transferTo(newFile);
+            return "success";
+        }else {
+            return "error";
         }
 
-        return "success";
     }
 
     @RequestMapping(value = "/query/{userid}",method = RequestMethod.GET)
@@ -145,11 +161,20 @@ public class UserController {
         map.put("user",user);
 //        model.addAttribute("user",user);
 
-        if (headPictureService.queryHeadPicture(userid)!=null){
 //            model.addAttribute("headpicture",headPictureService.queryHeadPicture(userid).getHeadpicture());
-            map.put("headpicture",headPictureService.queryHeadPicture(userid));
-        }
+        map.put("headpicture",headPictureService.queryHeadPicture(userid));
+
         return map;
+    }
+
+    @RequestMapping(value = "/item/message",method = RequestMethod.GET)
+    @ResponseBody
+    public List<Comment> queryItemMessage(HttpSession session){
+        String admin = (String) session.getAttribute("admin");
+
+        List<Comment> comments = commentService.queryCommentByItemHost(admin);
+
+        return comments;
     }
 
 }

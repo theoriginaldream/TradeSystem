@@ -1,10 +1,7 @@
 package com.example.controller;
 
 import com.example.pojo.*;
-import com.example.service.CommentService;
-import com.example.service.ItemPictureService;
-import com.example.service.ItemService;
-import com.example.service.ShoppingCartService;
+import com.example.service.*;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,6 +25,10 @@ public class ItemController {
     private ItemService itemService;
 
     @Autowired
+    @Qualifier("userServiceImpl")
+    private UserService userService;
+
+    @Autowired
     @Qualifier("itemPictureServiceImpl")
     private ItemPictureService itemPictureService;
 
@@ -46,22 +47,31 @@ public class ItemController {
 
     @RequestMapping(value = "/add/item",method = RequestMethod.POST)
     @ResponseBody
-    public String addItem(@RequestParam("itemname") String itemname, @RequestParam("schoolzone") String schoolzone, @RequestParam("detail") String detail, @RequestParam("price") String price, @RequestParam("pictures") MultipartFile[] pictures, HttpSession session) throws IOException {
+    public String addItem(@RequestParam("itemname") String itemname, @RequestParam(value = "schoolzone",required = false) String schoolzone,
+                          @RequestParam(value = "type",required = false) String type, @RequestParam(value = "detail",required = false) String detail,
+                          @RequestParam(value = "price",required = false) String price,
+                          @RequestParam(value = "picture1",required = false) MultipartFile picture1,
+                          @RequestParam(value = "picture2",required = false) MultipartFile picture2,
+                          @RequestParam(value = "picture3",required = false) MultipartFile picture3,
+                          @RequestParam(value = "picture4",required = false) MultipartFile picture4,
+                          @RequestParam(value = "picture5",required = false) MultipartFile picture5,
+                          HttpSession session) throws IOException {
         Item item = new Item();
         item.setItemname(itemname);
         item.setSchoolzone(schoolzone);
+        item.setType(type);
         item.setDetail(detail);
         item.setPrice(price);
         String host = (String) session.getAttribute("admin");
         item.setHost(host);
-
+        System.out.println(host);
         itemService.addItem(item);
 
         ItemPicture itemPicture = new ItemPicture();
         itemPicture.setItemid(item.getItemid());
         int count = 0;
 
-        for (MultipartFile picture : pictures) {
+        for (MultipartFile picture : Arrays.asList(picture1,picture2,picture3,picture4,picture5)) {
             count++;
             String oldFileName = picture.getOriginalFilename();
 
@@ -98,9 +108,7 @@ public class ItemController {
         List<Item> itemList = itemService.queryAllItem();
 
         for (Item item : itemList) {
-            if (itemPictureService.queryItemPicture(item.getItemid()) != null) {
-                item.setItempicture(itemPictureService.queryItemPicture(item.getItemid()));
-            }
+            item.setItempicture(itemPictureService.queryItemPicture(item.getItemid()));
         }
 
 //        model.addAttribute("itemList", itemList);
@@ -113,15 +121,17 @@ public class ItemController {
     public Map<String,Object> OneItem(@PathVariable("itemid") int itemid,Model model){
         Item item = itemService.queryItemById(itemid);
 
-        if (itemPictureService.queryItemPicture(itemid) != null) {
-            ItemPicture itemPicture = itemPictureService.queryItemPicture(itemid);
-            item.setItempicture(itemPicture);
-        }
+        ItemPicture itemPicture = itemPictureService.queryItemPicture(itemid);
+        item.setItempicture(itemPicture);
 
         Map<String,Object> map =  new HashMap<>();
 
         map.put("item",item);
 //        model.addAttribute("item",item);
+
+        User user = userService.queryUserByName(item.getHost());
+        map.put("user",user);
+
         List<Comment> comments = commentService.queryCommentByItemid(itemid);
 //        model.addAttribute("comments",comments);
         map.put("comments",comments);
@@ -140,16 +150,26 @@ public class ItemController {
 
 //        model.addAttribute("item", item);
 
-
         return item;
     }
 
-    @RequestMapping(value = "/update/item",method = RequestMethod.PUT)
+    @RequestMapping(value = "/update/item",method = RequestMethod.POST)
     @ResponseBody
-    public String updateItem(@RequestParam("itemid") int itemid, @RequestParam("itemname") String itemname, @RequestParam("schoolZone") String schoolZone, @RequestParam("detail") String detail, @RequestParam("price") String price, @RequestParam("pictures") MultipartFile[] pictures, HttpSession session) throws IOException {
+    public String updateItem(@RequestParam("itemid") int itemid, @RequestParam("itemname") String itemname,
+                             @RequestParam(value = "schoolzone",required = false) String schoolZone,
+                             @RequestParam(value = "type",required = false) String type,
+                             @RequestParam(value = "detail",required = false) String detail,
+                             @RequestParam(value = "price",required = false) String price,
+                             @RequestParam(value = "picture1",required = false) MultipartFile picture1,
+                             @RequestParam(value = "picture2",required = false) MultipartFile picture2,
+                             @RequestParam(value = "picture3",required = false) MultipartFile picture3,
+                             @RequestParam(value = "picture4",required = false) MultipartFile picture4,
+                             @RequestParam(value = "picture5",required = false) MultipartFile picture5,
+                             HttpSession session) throws IOException {
         Item item = itemService.queryItemById(itemid);
         item.setItemname(itemname);
         item.setSchoolzone(schoolZone);
+        item.setType(type);
         item.setDetail(detail);
         item.setPrice(price);
         itemService.updateItem(item);
@@ -160,7 +180,7 @@ public class ItemController {
         int count = 0;
         ItemPicture itemPicture = itemPictureService.queryItemPicture(itemid);
         if (itemPicture!=null){
-            for (MultipartFile picture : pictures) {
+            for (MultipartFile picture : Arrays.asList(picture1,picture2,picture3,picture4,picture5)) {
                 count ++;
                 String oldFileName = picture.getOriginalFilename();
 
@@ -223,7 +243,8 @@ public class ItemController {
             itemPictureService.updateItemPicture(itemPicture);
         }else {
             itemPicture = new ItemPicture();
-            for (MultipartFile picture : pictures) {
+            itemPicture.setItemid(itemid);
+            for (MultipartFile picture : Arrays.asList(picture1,picture2,picture3,picture4,picture5)) {
                 count ++;
                 String oldFileName = picture.getOriginalFilename();
 
@@ -253,7 +274,7 @@ public class ItemController {
         return "success";
     }
 
-    @RequestMapping(value = "/delete/{itemid}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{itemid}",method = RequestMethod.POST)
     @ResponseBody
     public String deleteItem(@PathVariable("itemid") int itemid,HttpSession session){
         itemService.deleteItem(itemid);
@@ -319,9 +340,7 @@ public class ItemController {
         List<Item> itemList = itemService.queryItemByType(schoolZone);
 
         for (Item item : itemList) {
-            if (itemPictureService.queryItemPicture(item.getItemid()) != null) {
-                item.setItempicture(itemPictureService.queryItemPicture(item.getItemid()));
-            }
+            item.setItempicture(itemPictureService.queryItemPicture(item.getItemid()));
         }
 
 //        model.addAttribute("itemList", itemList);
@@ -344,9 +363,7 @@ public class ItemController {
         List<Item> itemList = new ArrayList<>(itemMap.values());
 
         for (Item item : itemList) {
-            if (itemPictureService.queryItemPicture(item.getItemid()) != null) {
-                item.setItempicture(itemPictureService.queryItemPicture(item.getItemid()));
-            }
+            item.setItempicture(itemPictureService.queryItemPicture(item.getItemid()));
         }
 
 //        model.addAttribute("itemList", itemsList);
@@ -361,9 +378,7 @@ public class ItemController {
         List<Item> itemList = itemService.queryItemByHost(host);
 
         for (Item item : itemList) {
-            if (itemPictureService.queryItemPicture(item.getItemid()) != null) {
-                item.setItempicture(itemPictureService.queryItemPicture(item.getItemid()));
-            }
+            item.setItempicture(itemPictureService.queryItemPicture(item.getItemid()));
         }
 
 //        model.addAttribute("itemList", itemList);
@@ -378,9 +393,7 @@ public class ItemController {
         List<Item> itemList = itemService.queryItemByHost(userid);
 
         for (Item item : itemList) {
-            if (itemPictureService.queryItemPicture(item.getItemid()) != null) {
-                item.setItempicture(itemPictureService.queryItemPicture(item.getItemid()));
-            }
+            item.setItempicture(itemPictureService.queryItemPicture(item.getItemid()));
         }
 
 //        model.addAttribute("itemList", itemList);
@@ -429,9 +442,7 @@ public class ItemController {
 
         for (ShoppingCart shoppingCart : shoppingCarts) {
             Item item = itemService.queryItemById(shoppingCart.getItemid());
-            if (itemPictureService.queryItemPicture(item.getItemid())!=null){
-                item.setItempicture(itemPictureService.queryItemPicture(item.getItemid()));
-            }
+            item.setItempicture(itemPictureService.queryItemPicture(item.getItemid()));
             itemList.add(item);
         }
 
