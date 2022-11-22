@@ -3,13 +3,17 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.dao.ShoppingCartMapper">
-    <insert id="addShoppingCart" parameterType="ShoppingCart" useGeneratedKeys="true" keyProperty="commentid">
+    <insert id="addShoppingCart" parameterType="ShoppingCart" useGeneratedKeys="true" keyProperty="id">
         insert into trade.shoppingcart (userid, itemid, date)
         values (#{userid},#{itemid},#{date})
     </insert>
     
     <delete id="deleteShoppingCart" parameterType="int">
         delete from trade.shoppingcart where id = #{id}
+    </delete>
+    
+    <delete id="deleteShoppingCartByItemId" parameterType="int">
+        delete from trade.shoppingcart where itemid = #{itemid}
     </delete>
     
     <select id="queryShoppingCartById" resultType="ShoppingCart">

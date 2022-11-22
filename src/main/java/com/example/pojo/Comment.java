@@ -1,5 +1,6 @@
 package com.example.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,5 +15,6 @@ public class Comment {
     private int itemid;
     private String userid;
     private String comment;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date datetime;
 }

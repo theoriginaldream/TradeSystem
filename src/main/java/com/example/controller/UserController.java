@@ -1,12 +1,10 @@
 package com.example.controller;
 
 import com.example.pojo.Comment;
+import com.example.pojo.CommentItem;
 import com.example.pojo.HeadPicture;
 import com.example.pojo.User;
-import com.example.service.CommentService;
-import com.example.service.HeadPictureService;
-import com.example.service.ShoppingCartService;
-import com.example.service.UserService;
+import com.example.service.*;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,10 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 @RequestMapping("/user")
@@ -43,6 +38,10 @@ public class UserController {
     @Qualifier("commentServiceImpl")
     private CommentService commentService;
 
+    @Autowired
+    @Qualifier("itemServiceImpl")
+    private ItemService itemService;
+
     @RequestMapping(value = "/user",method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> userShow(HttpSession session, Model model){
@@ -60,22 +59,22 @@ public class UserController {
         return map;
     }
 
-    @RequestMapping(value = "/to/update/{userid}",method = RequestMethod.GET)
-    @ResponseBody
-    public Map<String,Object> toUpdateUser(@PathVariable("userid") String userid, Model model){
-        User user = userService.queryUserByName(userid);
-
-        Map<String,Object> map = new HashMap<>();
-
-        map.put("user",user);
-
-//        model.addAttribute("user",user);
-
-//            model.addAttribute("headpicture",headPictureService.queryHeadPicture(userid).getHeadpicture());
-        map.put("headpicture",headPictureService.queryHeadPicture(userid));
-
-        return map;
-    }
+//    @RequestMapping(value = "/to/update/{userid}",method = RequestMethod.GET)
+//    @ResponseBody
+//    public Map<String,Object> toUpdateUser(@PathVariable("userid") String userid, Model model){
+//        User user = userService.queryUserByName(userid);
+//
+//        Map<String,Object> map = new HashMap<>();
+//
+//        map.put("user",user);
+//
+////        model.addAttribute("user",user);
+//
+////            model.addAttribute("headpicture",headPictureService.queryHeadPicture(userid).getHeadpicture());
+//        map.put("headpicture",headPictureService.queryHeadPicture(userid));
+//
+//        return map;
+//    }
 
 //    @RequestMapping("/toUpdatePassword")
 //    public String toUpdatePassword(){
@@ -169,10 +168,23 @@ public class UserController {
 
     @RequestMapping(value = "/item/message",method = RequestMethod.GET)
     @ResponseBody
-    public List<Comment> queryItemMessage(HttpSession session){
+    public List<CommentItem> queryItemMessage(HttpSession session){
         String admin = (String) session.getAttribute("admin");
 
-        List<Comment> comments = commentService.queryCommentByItemHost(admin);
+        List<Comment> commentList = commentService.queryCommentByItemHost(admin);
+
+        List<CommentItem> comments = new ArrayList<>();
+
+        for (Comment comment : commentList) {
+            CommentItem commentItem = new CommentItem();
+            commentItem.setCommentid(comment.getCommentid());
+            commentItem.setComment(comment.getComment());
+            commentItem.setDatetime(comment.getDatetime());
+            commentItem.setItemid(comment.getItemid());
+            commentItem.setUserid(comment.getUserid());
+            commentItem.setItemname(itemService.queryItemById(comment.getItemid()).getItemname());
+            comments.add(commentItem);
+        }
 
         return comments;
     }

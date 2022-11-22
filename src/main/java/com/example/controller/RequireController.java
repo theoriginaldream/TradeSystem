@@ -1,13 +1,7 @@
 package com.example.controller;
 
-import com.example.pojo.Comment;
-import com.example.pojo.ItemPicture;
-import com.example.pojo.RequireItem;
-import com.example.pojo.User;
-import com.example.service.CommentService;
-import com.example.service.ItemPictureService;
-import com.example.service.RequireItemService;
-import com.example.service.UserService;
+import com.example.pojo.*;
+import com.example.service.*;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -42,6 +36,10 @@ public class RequireController {
     @Qualifier("commentServiceImpl")
     private CommentService commentService;
 
+    @Autowired
+    @Qualifier("headPictureServiceImpl")
+    private HeadPictureService headPictureService;
+
 //    @RequestMapping("/to/addRequire")
 //    public String toAddRequireItem(){
 //        return "addRequire";
@@ -49,8 +47,7 @@ public class RequireController {
 
     @RequestMapping(value = "/add/require",method = RequestMethod.POST)
     @ResponseBody
-    public String addRequire(@RequestParam("ritemname") String ritemname,@RequestParam(value = "detail",required = false) String detail,
-                             @RequestParam(value = "price",required = false) String price,
+    public String addRequire(@RequestParam("ritemname") String ritemname,
                              @RequestParam(value = "picture1",required = false) MultipartFile picture1,
                              @RequestParam(value = "picture2",required = false) MultipartFile picture2,
                              @RequestParam(value = "picture3",required = false) MultipartFile picture3,
@@ -60,8 +57,8 @@ public class RequireController {
         String host = (String) session.getAttribute("admin");
         RequireItem requireItem = new RequireItem();
         requireItem.setRitemname(ritemname);
-        requireItem.setDetail(detail);
-        requireItem.setPrice(price);
+//        requireItem.setDetail(detail);
+//        requireItem.setPrice(price);
         requireItem.setHost(host);
 
         Date date = new Date();
@@ -75,26 +72,28 @@ public class RequireController {
 
         for (MultipartFile picture : Arrays.asList(picture1,picture2,picture3,picture4,picture5)) {
             count++;
-            String oldFileName = picture.getOriginalFilename();
+            if (picture != null){
+                String oldFileName = picture.getOriginalFilename();
 
-            String filePath = session.getServletContext().getRealPath("pictures");
+                String filePath = session.getServletContext().getRealPath("pictures");
 
-            if (picture != null && oldFileName != null && oldFileName.length() > 0) {
-                String newFileName = UUID.randomUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
+                if (oldFileName != null && oldFileName.length() > 0) {
+                    String newFileName = UUID.randomUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
 
-                File newFile = new File(filePath + "/" + newFileName);
-                picture.transferTo(newFile);
+                    File newFile = new File(filePath + "/" + newFileName);
+                    picture.transferTo(newFile);
 
-                if (count==1){
-                    itemPicture.setItempicture(newFileName);
-                } else if (count==2) {
-                    itemPicture.setItempicture2(newFileName);
-                } else if (count==3) {
-                    itemPicture.setItempicture3(newFileName);
-                } else if (count==4) {
-                    itemPicture.setItempicture4(newFileName);
-                } else if (count==5) {
-                    itemPicture.setItempicture5(newFileName);
+                    if (count==1){
+                        itemPicture.setItempicture(newFileName);
+                    } else if (count==2) {
+                        itemPicture.setItempicture2(newFileName);
+                    } else if (count==3) {
+                        itemPicture.setItempicture3(newFileName);
+                    } else if (count==4) {
+                        itemPicture.setItempicture4(newFileName);
+                    } else if (count==5) {
+                        itemPicture.setItempicture5(newFileName);
+                    }
                 }
             }
         }
@@ -132,7 +131,28 @@ public class RequireController {
 
         map.put("user",user);
 
-        List<Comment> comments = commentService.queryCommentByItemid(ritemid);
+        HeadPicture headPicture = headPictureService.queryHeadPicture(user.getUserid());
+
+        map.put("headpicture",headPicture);
+
+        List<Comment> commentList = commentService.queryCommentByItemid(ritemid);
+
+        List<CommentUser> comments = new ArrayList<>();
+
+        for (Comment comment : commentList) {
+            CommentUser commentUser = new CommentUser();
+            commentUser.setCommentid(comment.getCommentid());
+            commentUser.setComment(comment.getComment());
+            commentUser.setDatetime(comment.getDatetime());
+            commentUser.setUserid(comment.getUserid());
+            commentUser.setItemid(comment.getItemid());
+            User user1 = userService.queryUserByName(comment.getUserid());
+            commentUser.setName(user1.getName());
+            if (headPictureService.queryHeadPicture(user1.getUserid())!=null){
+                commentUser.setHeadpicture(headPictureService.queryHeadPicture(user1.getUserid()).getHeadpicture());
+            }
+            comments.add(commentUser);
+        }
 
         map.put("comments",comments);
 //        model.addAttribute("requireItem",requireItem);
@@ -158,8 +178,6 @@ public class RequireController {
     @RequestMapping(value = "/update/require",method = RequestMethod.POST)
     @ResponseBody
     public String updateRequire(@RequestParam("ritemid") int ritemid,@RequestParam("ritemname") String ritemname,
-                                @RequestParam(value = "detail",required = false) String detail,
-                                @RequestParam(value = "price",required = false) String price,
                                 @RequestParam(value = "picture1",required = false) MultipartFile picture1,
                                 @RequestParam(value = "picture2",required = false) MultipartFile picture2,
                                 @RequestParam(value = "picture3",required = false) MultipartFile picture3,
@@ -168,8 +186,8 @@ public class RequireController {
                                 HttpSession session,Model model) throws IOException {
         RequireItem requireItem = requireItemService.queryRequireItemById(ritemid);
         requireItem.setRitemname(ritemname);
-        requireItem.setDetail(detail);
-        requireItem.setPrice(price);
+//        requireItem.setDetail(detail);
+//        requireItem.setPrice(price);
         Date date = new Date();
         requireItem.setDate(date);
         requireItemService.updateRequireItem(requireItem);
@@ -179,90 +197,97 @@ public class RequireController {
         if (itemPicture!=null){
             for (MultipartFile picture : Arrays.asList(picture1,picture2,picture3,picture4,picture5)) {
                 count ++;
-                String oldFileName = picture.getOriginalFilename();
+                if (picture != null){
+                    String oldFileName = picture.getOriginalFilename();
 
-                String filePath = session.getServletContext().getRealPath("pictures");
+                    String filePath = session.getServletContext().getRealPath("pictures");
 
-                if (picture != null && oldFileName != null && oldFileName.length() > 0) {
-                    String newFileName = UUID.randomUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
+                    if (oldFileName != null && oldFileName.length() > 0) {
+                        String newFileName = UUID.randomUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
 
-                    File newFile = new File(filePath + "/" + newFileName);
-                    picture.transferTo(newFile);
+                        File newFile = new File(filePath + "/" + newFileName);
+                        picture.transferTo(newFile);
 
-                    if (count==1){
-                        if (itemPicture.getItempicture()!=null){
-                            String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture();
-                            File oldfile = new File(oldItemPicturePath);
-                            if (oldfile.exists()) {
-                                oldfile.delete();
+                        if (count==1){
+                            if (itemPicture.getItempicture()!=null){
+                                String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture();
+                                File oldfile = new File(oldItemPicturePath);
+                                if (oldfile.exists()) {
+                                    oldfile.delete();
+                                }
                             }
-                        }
-                        itemPicture.setItempicture(newFileName);
-                    } else if (count==2) {
-                        if (itemPicture.getItempicture2()!=null){
-                            String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture2();
-                            File oldfile = new File(oldItemPicturePath);
-                            if (oldfile.exists()) {
-                                oldfile.delete();
+                            itemPicture.setItempicture(newFileName);
+                        } else if (count==2) {
+                            if (itemPicture.getItempicture2()!=null){
+                                String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture2();
+                                File oldfile = new File(oldItemPicturePath);
+                                if (oldfile.exists()) {
+                                    oldfile.delete();
+                                }
                             }
-                        }
-                        itemPicture.setItempicture2(newFileName);
-                    } else if (count==3) {
-                        if (itemPicture.getItempicture3()!=null){
-                            String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture3();
-                            File oldfile = new File(oldItemPicturePath);
-                            if (oldfile.exists()) {
-                                oldfile.delete();
+                            itemPicture.setItempicture2(newFileName);
+                        } else if (count==3) {
+                            if (itemPicture.getItempicture3()!=null){
+                                String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture3();
+                                File oldfile = new File(oldItemPicturePath);
+                                if (oldfile.exists()) {
+                                    oldfile.delete();
+                                }
                             }
-                        }
-                        itemPicture.setItempicture3(newFileName);
-                    } else if (count==4) {
-                        if (itemPicture.getItempicture4()!=null){
-                            String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture4();
-                            File oldfile = new File(oldItemPicturePath);
-                            if (oldfile.exists()) {
-                                oldfile.delete();
+                            itemPicture.setItempicture3(newFileName);
+                        } else if (count==4) {
+                            if (itemPicture.getItempicture4()!=null){
+                                String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture4();
+                                File oldfile = new File(oldItemPicturePath);
+                                if (oldfile.exists()) {
+                                    oldfile.delete();
+                                }
                             }
-                        }
-                        itemPicture.setItempicture4(newFileName);
-                    } else if (count==5) {
-                        if (itemPicture.getItempicture5()!=null){
-                            String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture5();
-                            File oldfile = new File(oldItemPicturePath);
-                            if (oldfile.exists()) {
-                                oldfile.delete();
+                            itemPicture.setItempicture4(newFileName);
+                        } else if (count==5) {
+                            if (itemPicture.getItempicture5()!=null){
+                                String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture5();
+                                File oldfile = new File(oldItemPicturePath);
+                                if (oldfile.exists()) {
+                                    oldfile.delete();
+                                }
                             }
+                            itemPicture.setItempicture5(newFileName);
                         }
-                        itemPicture.setItempicture5(newFileName);
                     }
                 }
+
             }
             itemPictureService.updateItemPicture(itemPicture);
         }else {
             itemPicture = new ItemPicture();
+            itemPicture.setItemid(ritemid);
             for (MultipartFile picture : Arrays.asList(picture1,picture2,picture3,picture4,picture5)) {
                 count ++;
-                String oldFileName = picture.getOriginalFilename();
+                if (picture != null){
+                    String oldFileName = picture.getOriginalFilename();
 
-                String filePath = session.getServletContext().getRealPath("pictures");
+                    String filePath = session.getServletContext().getRealPath("pictures");
 
-                if (picture != null && oldFileName != null && oldFileName.length() > 0) {
-                    String newFileName = UUID.randomUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
+                    if (oldFileName != null && oldFileName.length() > 0) {
+                        String newFileName = UUID.randomUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
 
-                    File newFile = new File(filePath + "/" + newFileName);
-                    picture.transferTo(newFile);
-                    if (count==1){
-                        itemPicture.setItempicture(newFileName);
-                    } else if (count==2) {
-                        itemPicture.setItempicture2(newFileName);
-                    } else if (count==3) {
-                        itemPicture.setItempicture3(newFileName);
-                    } else if (count==4) {
-                        itemPicture.setItempicture4(newFileName);
-                    } else if (count==5) {
-                        itemPicture.setItempicture5(newFileName);
+                        File newFile = new File(filePath + "/" + newFileName);
+                        picture.transferTo(newFile);
+                        if (count==1){
+                            itemPicture.setItempicture(newFileName);
+                        } else if (count==2) {
+                            itemPicture.setItempicture2(newFileName);
+                        } else if (count==3) {
+                            itemPicture.setItempicture3(newFileName);
+                        } else if (count==4) {
+                            itemPicture.setItempicture4(newFileName);
+                        } else if (count==5) {
+                            itemPicture.setItempicture5(newFileName);
+                        }
                     }
                 }
+
             }
             itemPictureService.addItemPicture(itemPicture);
         }

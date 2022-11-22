@@ -40,6 +40,10 @@ public class ItemController {
     @Qualifier("shoppingCartServiceImpl")
     private ShoppingCartService shoppingCartService;
 
+    @Autowired
+    @Qualifier("headPictureServiceImpl")
+    private HeadPictureService headPictureService;
+
 //    @RequestMapping("/toAddItem")
 //    public String toAddItem() {
 //        return "addItem";
@@ -48,7 +52,7 @@ public class ItemController {
     @RequestMapping(value = "/add/item",method = RequestMethod.POST)
     @ResponseBody
     public String addItem(@RequestParam("itemname") String itemname, @RequestParam(value = "schoolzone",required = false) String schoolzone,
-                          @RequestParam(value = "type",required = false) String type, @RequestParam(value = "detail",required = false) String detail,
+                          @RequestParam(value = "type",required = false) String type,
                           @RequestParam(value = "price",required = false) String price,
                           @RequestParam(value = "picture1",required = false) MultipartFile picture1,
                           @RequestParam(value = "picture2",required = false) MultipartFile picture2,
@@ -60,7 +64,7 @@ public class ItemController {
         item.setItemname(itemname);
         item.setSchoolzone(schoolzone);
         item.setType(type);
-        item.setDetail(detail);
+//        item.setDetail(detail);
         item.setPrice(price);
         String host = (String) session.getAttribute("admin");
         item.setHost(host);
@@ -73,28 +77,31 @@ public class ItemController {
 
         for (MultipartFile picture : Arrays.asList(picture1,picture2,picture3,picture4,picture5)) {
             count++;
-            String oldFileName = picture.getOriginalFilename();
+            if (picture!=null){
+                String oldFileName = picture.getOriginalFilename();
 
-            String filePath = session.getServletContext().getRealPath("pictures");
+                String filePath = session.getServletContext().getRealPath("pictures");
 
-            if (picture != null && oldFileName != null && oldFileName.length() > 0) {
-                String newFileName = UUID.randomUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
+                if (oldFileName != null && oldFileName.length() > 0) {
+                    String newFileName = UUID.randomUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
 
-                File newFile = new File(filePath + "/" + newFileName);
-                picture.transferTo(newFile);
+                    File newFile = new File(filePath + "/" + newFileName);
+                    picture.transferTo(newFile);
 
-                if (count==1){
-                    itemPicture.setItempicture(newFileName);
-                } else if (count==2) {
-                    itemPicture.setItempicture2(newFileName);
-                } else if (count==3) {
-                    itemPicture.setItempicture3(newFileName);
-                } else if (count==4) {
-                    itemPicture.setItempicture4(newFileName);
-                } else if (count==5) {
-                    itemPicture.setItempicture5(newFileName);
+                    if (count==1){
+                        itemPicture.setItempicture(newFileName);
+                    } else if (count==2) {
+                        itemPicture.setItempicture2(newFileName);
+                    } else if (count==3) {
+                        itemPicture.setItempicture3(newFileName);
+                    } else if (count==4) {
+                        itemPicture.setItempicture4(newFileName);
+                    } else if (count==5) {
+                        itemPicture.setItempicture5(newFileName);
+                    }
                 }
             }
+
         }
 
         itemPictureService.addItemPicture(itemPicture);
@@ -132,8 +139,30 @@ public class ItemController {
         User user = userService.queryUserByName(item.getHost());
         map.put("user",user);
 
-        List<Comment> comments = commentService.queryCommentByItemid(itemid);
+        HeadPicture headPicture = headPictureService.queryHeadPicture(user.getUserid());
+
+        map.put("headpicture",headPicture);
+
+        List<Comment> commentList = commentService.queryCommentByItemid(itemid);
 //        model.addAttribute("comments",comments);
+
+        List<CommentUser> comments = new ArrayList<>();
+
+        for (Comment comment : commentList) {
+            CommentUser commentUser = new CommentUser();
+            commentUser.setCommentid(comment.getCommentid());
+            commentUser.setComment(comment.getComment());
+            commentUser.setDatetime(comment.getDatetime());
+            commentUser.setUserid(comment.getUserid());
+            commentUser.setItemid(comment.getItemid());
+            User user1 = userService.queryUserByName(comment.getUserid());
+            commentUser.setName(user1.getName());
+            if (headPictureService.queryHeadPicture(user1.getUserid())!=null){
+                commentUser.setHeadpicture(headPictureService.queryHeadPicture(user1.getUserid()).getHeadpicture());
+            }
+            comments.add(commentUser);
+        }
+
         map.put("comments",comments);
 
         return map;
@@ -158,7 +187,6 @@ public class ItemController {
     public String updateItem(@RequestParam("itemid") int itemid, @RequestParam("itemname") String itemname,
                              @RequestParam(value = "schoolzone",required = false) String schoolZone,
                              @RequestParam(value = "type",required = false) String type,
-                             @RequestParam(value = "detail",required = false) String detail,
                              @RequestParam(value = "price",required = false) String price,
                              @RequestParam(value = "picture1",required = false) MultipartFile picture1,
                              @RequestParam(value = "picture2",required = false) MultipartFile picture2,
@@ -170,7 +198,7 @@ public class ItemController {
         item.setItemname(itemname);
         item.setSchoolzone(schoolZone);
         item.setType(type);
-        item.setDetail(detail);
+//        item.setDetail(detail);
         item.setPrice(price);
         item.setDatetime(new Date());
         itemService.updateItem(item);
@@ -183,63 +211,66 @@ public class ItemController {
         if (itemPicture!=null){
             for (MultipartFile picture : Arrays.asList(picture1,picture2,picture3,picture4,picture5)) {
                 count ++;
-                String oldFileName = picture.getOriginalFilename();
+                if (picture != null){
+                    String oldFileName = picture.getOriginalFilename();
 
-                String filePath = session.getServletContext().getRealPath("pictures");
+                    String filePath = session.getServletContext().getRealPath("pictures");
 
-                if (picture != null && oldFileName != null && oldFileName.length() > 0) {
-                    String newFileName = UUID.randomUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
+                    if (oldFileName != null && oldFileName.length() > 0) {
+                        String newFileName = UUID.randomUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
 
-                    File newFile = new File(filePath + "/" + newFileName);
-                    picture.transferTo(newFile);
+                        File newFile = new File(filePath + "/" + newFileName);
+                        picture.transferTo(newFile);
 
-                    if (count==1){
-                        if (itemPicture.getItempicture()!=null){
-                            String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture();
-                            File oldfile = new File(oldItemPicturePath);
-                            if (oldfile.exists()) {
-                                oldfile.delete();
+                        if (count==1){
+                            if (itemPicture.getItempicture()!=null){
+                                String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture();
+                                File oldfile = new File(oldItemPicturePath);
+                                if (oldfile.exists()) {
+                                    oldfile.delete();
+                                }
                             }
-                        }
-                        itemPicture.setItempicture(newFileName);
-                    } else if (count==2) {
-                        if (itemPicture.getItempicture2()!=null){
-                            String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture2();
-                            File oldfile = new File(oldItemPicturePath);
-                            if (oldfile.exists()) {
-                                oldfile.delete();
+                            itemPicture.setItempicture(newFileName);
+                        } else if (count==2) {
+                            if (itemPicture.getItempicture2()!=null){
+                                String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture2();
+                                File oldfile = new File(oldItemPicturePath);
+                                if (oldfile.exists()) {
+                                    oldfile.delete();
+                                }
                             }
-                        }
-                        itemPicture.setItempicture2(newFileName);
-                    } else if (count==3) {
-                        if (itemPicture.getItempicture3()!=null){
-                            String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture3();
-                            File oldfile = new File(oldItemPicturePath);
-                            if (oldfile.exists()) {
-                                oldfile.delete();
+                            itemPicture.setItempicture2(newFileName);
+                        } else if (count==3) {
+                            if (itemPicture.getItempicture3()!=null){
+                                String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture3();
+                                File oldfile = new File(oldItemPicturePath);
+                                if (oldfile.exists()) {
+                                    oldfile.delete();
+                                }
                             }
-                        }
-                        itemPicture.setItempicture3(newFileName);
-                    } else if (count==4) {
-                        if (itemPicture.getItempicture4()!=null){
-                            String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture4();
-                            File oldfile = new File(oldItemPicturePath);
-                            if (oldfile.exists()) {
-                                oldfile.delete();
+                            itemPicture.setItempicture3(newFileName);
+                        } else if (count==4) {
+                            if (itemPicture.getItempicture4()!=null){
+                                String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture4();
+                                File oldfile = new File(oldItemPicturePath);
+                                if (oldfile.exists()) {
+                                    oldfile.delete();
+                                }
                             }
-                        }
-                        itemPicture.setItempicture4(newFileName);
-                    } else if (count==5) {
-                        if (itemPicture.getItempicture5()!=null){
-                            String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture5();
-                            File oldfile = new File(oldItemPicturePath);
-                            if (oldfile.exists()) {
-                                oldfile.delete();
+                            itemPicture.setItempicture4(newFileName);
+                        } else if (count==5) {
+                            if (itemPicture.getItempicture5()!=null){
+                                String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture5();
+                                File oldfile = new File(oldItemPicturePath);
+                                if (oldfile.exists()) {
+                                    oldfile.delete();
+                                }
                             }
+                            itemPicture.setItempicture5(newFileName);
                         }
-                        itemPicture.setItempicture5(newFileName);
                     }
                 }
+
             }
             itemPictureService.updateItemPicture(itemPicture);
         }else {
@@ -247,27 +278,30 @@ public class ItemController {
             itemPicture.setItemid(itemid);
             for (MultipartFile picture : Arrays.asList(picture1,picture2,picture3,picture4,picture5)) {
                 count ++;
-                String oldFileName = picture.getOriginalFilename();
+                if (picture != null){
+                    String oldFileName = picture.getOriginalFilename();
 
-                String filePath = session.getServletContext().getRealPath("pictures");
+                    String filePath = session.getServletContext().getRealPath("pictures");
 
-                if (picture != null && oldFileName != null && oldFileName.length() > 0) {
-                    String newFileName = UUID.randomUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
+                    if (oldFileName != null && oldFileName.length() > 0) {
+                        String newFileName = UUID.randomUUID() + oldFileName.substring(oldFileName.lastIndexOf("."));
 
-                    File newFile = new File(filePath + "/" + newFileName);
-                    picture.transferTo(newFile);
-                    if (count==1){
-                        itemPicture.setItempicture(newFileName);
-                    } else if (count==2) {
-                        itemPicture.setItempicture2(newFileName);
-                    } else if (count==3) {
-                        itemPicture.setItempicture3(newFileName);
-                    } else if (count==4) {
-                        itemPicture.setItempicture4(newFileName);
-                    } else if (count==5) {
-                        itemPicture.setItempicture5(newFileName);
+                        File newFile = new File(filePath + "/" + newFileName);
+                        picture.transferTo(newFile);
+                        if (count==1){
+                            itemPicture.setItempicture(newFileName);
+                        } else if (count==2) {
+                            itemPicture.setItempicture2(newFileName);
+                        } else if (count==3) {
+                            itemPicture.setItempicture3(newFileName);
+                        } else if (count==4) {
+                            itemPicture.setItempicture4(newFileName);
+                        } else if (count==5) {
+                            itemPicture.setItempicture5(newFileName);
+                        }
                     }
                 }
+
             }
             itemPictureService.addItemPicture(itemPicture);
         }
@@ -337,8 +371,8 @@ public class ItemController {
 
     @RequestMapping(value = "/query/zone",method = RequestMethod.GET)
     @ResponseBody
-    public List<Item> queryItemsByType(@RequestParam("schoolZone") String schoolZone, Model model) {
-        List<Item> itemList = itemService.queryItemByType(schoolZone);
+    public List<Item> queryItemsByType(@RequestParam("schoolzone") String schoolzone, Model model) {
+        List<Item> itemList = itemService.queryItemByType(schoolzone);
 
         for (Item item : itemList) {
             item.setItempicture(itemPictureService.queryItemPicture(item.getItemid()));
@@ -444,6 +478,7 @@ public class ItemController {
         for (ShoppingCart shoppingCart : shoppingCarts) {
             Item item = itemService.queryItemById(shoppingCart.getItemid());
             item.setItempicture(itemPictureService.queryItemPicture(item.getItemid()));
+            item.setDatetime(shoppingCart.getDate());
             itemList.add(item);
         }
 
