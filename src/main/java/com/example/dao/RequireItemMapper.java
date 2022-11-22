@@ -16,6 +16,8 @@ public interface RequireItemMapper {
 
     List<RequireItem> queryRequireItemByHost(@Param("host") String host);
 
+    List<RequireItem> queryRequireItemByZone(@Param("schoolzone") String schoolzone);
+
     List<RequireItem> queryAllRequireItem();
 
     RequireItem queryRequireItemById(@Param("ritemid") int ritemid);

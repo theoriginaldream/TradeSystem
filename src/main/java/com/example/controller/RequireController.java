@@ -48,6 +48,8 @@ public class RequireController {
     @RequestMapping(value = "/add/require",method = RequestMethod.POST)
     @ResponseBody
     public String addRequire(@RequestParam("ritemname") String ritemname,
+                             @RequestParam(value = "price",required = false) String price,
+                             @RequestParam(value = "schoolzone",required = false) String schoolzone,
                              @RequestParam(value = "picture1",required = false) MultipartFile picture1,
                              @RequestParam(value = "picture2",required = false) MultipartFile picture2,
                              @RequestParam(value = "picture3",required = false) MultipartFile picture3,
@@ -58,7 +60,8 @@ public class RequireController {
         RequireItem requireItem = new RequireItem();
         requireItem.setRitemname(ritemname);
 //        requireItem.setDetail(detail);
-//        requireItem.setPrice(price);
+        requireItem.setPrice(price);
+        requireItem.setSchoolzone(schoolzone);
         requireItem.setHost(host);
 
         Date date = new Date();
@@ -178,6 +181,8 @@ public class RequireController {
     @RequestMapping(value = "/update/require",method = RequestMethod.POST)
     @ResponseBody
     public String updateRequire(@RequestParam("ritemid") int ritemid,@RequestParam("ritemname") String ritemname,
+                                @RequestParam(value = "price",required = false) String price,
+                                @RequestParam(value = "schoolzone",required = false) String schoolzone,
                                 @RequestParam(value = "picture1",required = false) MultipartFile picture1,
                                 @RequestParam(value = "picture2",required = false) MultipartFile picture2,
                                 @RequestParam(value = "picture3",required = false) MultipartFile picture3,
@@ -187,7 +192,8 @@ public class RequireController {
         RequireItem requireItem = requireItemService.queryRequireItemById(ritemid);
         requireItem.setRitemname(ritemname);
 //        requireItem.setDetail(detail);
-//        requireItem.setPrice(price);
+        requireItem.setPrice(price);
+        requireItem.setSchoolzone(schoolzone);
         Date date = new Date();
         requireItem.setDate(date);
         requireItemService.updateRequireItem(requireItem);
@@ -367,6 +373,30 @@ public class RequireController {
         }
 
 //        model.addAttribute("requireItemList", requireItemList);
+
+        return requireItemList;
+    }
+
+    @RequestMapping(value = "/query/zone",method = RequestMethod.GET)
+    @ResponseBody
+    public List<RequireItem> queryRequireItemByZone(@RequestParam("schoolzone") String schoolzone,HttpSession session){
+        List<RequireItem> requireItemList = requireItemService.queryRequireItemByZone(schoolzone);
+
+        for (RequireItem requireItem : requireItemList) {
+            requireItem.setItemPicture(itemPictureService.queryItemPicture(requireItem.getRitemid()));
+        }
+
+        return requireItemList;
+    }
+
+    @RequestMapping(value = "/query/name",method = RequestMethod.GET)
+    @ResponseBody
+    public List<RequireItem> queryRequireItemByName(@RequestParam("query") String query,HttpSession session){
+        List<RequireItem> requireItemList = requireItemService.queryRequireItemByName(query);
+
+        for (RequireItem requireItem : requireItemList) {
+            requireItem.setItemPicture(itemPictureService.queryItemPicture(requireItem.getRitemid()));
+        }
 
         return requireItemList;
     }
