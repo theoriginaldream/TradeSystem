@@ -3,9 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.dao.OrderMapper">
-    <insert id="addOrder" parameterType="Order" useGeneratedKeys="true" keyProperty="itemid">
+    <insert id="addOrder" parameterType="Order" useGeneratedKeys="true" keyProperty="orderid">
         insert into trade.orders (itemid, buyer, seller, status, datetime)
-        values (#{itemid},#{buyer},#{seller},#{status},#{datetime})
+        values (#{itemid},#{buyer},#{seller},#{status},#{datetime});
     </insert>
     
     <delete id="deleteOrder" parameterType="int">
@@ -14,7 +14,7 @@
     
     <update id="updateOrder" parameterType="Order">
         update trade.orders
-        set itemid = #{itemname},buyer=#{buyer},seller = #{seller},status = #{status},datetime=#{datetime}
+        set status = #{status}
         where orderid = #{orderid}
     </update>
     

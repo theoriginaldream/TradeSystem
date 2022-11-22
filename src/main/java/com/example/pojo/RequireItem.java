@@ -1,12 +1,15 @@
 package com.example.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class RequireItem{
     private int ritemid;
     private String ritemname;
-    private String detail;
-    private String price;
+//    private String detail;
+//    private String price;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date date;
     private String host;
     private ItemPicture itemPicture;
@@ -14,19 +17,19 @@ public class RequireItem{
     public RequireItem() {
     }
 
-    public RequireItem(int ritemid, String ritemname, String detail, String price, Date date,String host) {
+    public RequireItem(int ritemid, String ritemname, Date date,String host) {
         this.ritemid = ritemid;
         this.ritemname = ritemname;
-        this.detail = detail;
-        this.price = price;
+//        this.detail = detail;
+//        this.price = price;
         this.date = date;
     }
 
-    public RequireItem(int ritemid, String ritemname, String detail, String price, Date date,String host,ItemPicture itemPicture) {
+    public RequireItem(int ritemid, String ritemname, Date date,String host,ItemPicture itemPicture) {
         this.ritemid = ritemid;
         this.ritemname = ritemname;
-        this.detail = detail;
-        this.price = price;
+//        this.detail = detail;
+//        this.price = price;
         this.date = date;
         this.itemPicture = itemPicture;
     }
@@ -47,21 +50,21 @@ public class RequireItem{
         this.ritemname = ritemname;
     }
 
-    public String getDetail() {
-        return detail;
-    }
+//    public String getDetail() {
+//        return detail;
+//    }
+//
+//    public void setDetail(String detail) {
+//        this.detail = detail;
+//    }
 
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
+//    public String getPrice() {
+//        return price;
+//    }
+//
+//    public void setPrice(String price) {
+//        this.price = price;
+//    }
 
     public Date getDate() {
         return date;

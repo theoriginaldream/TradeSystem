@@ -4,10 +4,7 @@ import com.example.pojo.Item;
 import com.example.pojo.ItemPicture;
 import com.example.pojo.Order;
 import com.example.pojo.OrderItem;
-import com.example.service.ItemPictureService;
-import com.example.service.ItemService;
-import com.example.service.OrderService;
-import com.example.service.RequireItemService;
+import com.example.service.*;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -40,6 +37,10 @@ public class OrderController {
     @Qualifier("orderServiceImpl")
     private OrderService orderService;
 
+    @Autowired
+    @Qualifier("shoppingCartServiceImpl")
+    private ShoppingCartService shoppingCartService;
+
     @RequestMapping(value = "/add/order",method = RequestMethod.POST)
     @ResponseBody
     public String addOrder(@RequestParam("itemid") int itemid, HttpSession session){
@@ -52,6 +53,8 @@ public class OrderController {
         order.setDatetime(new Date());
         order.setStatus("未完成");
         orderService.addOrder(order);
+
+        shoppingCartService.deleteShoppingCartByItemId(itemid);
 
         return "success";
     }
@@ -77,6 +80,7 @@ public class OrderController {
 
         if (admin!=null && "未完成".equals(order.getStatus()) && admin.equals(order.getBuyer())){
             order.setStatus("已完成");
+            orderService.updateOrder(order);
             return "success";
         }else {
             return "无权限更改";
@@ -102,6 +106,7 @@ public class OrderController {
             orderItem.setDatetime(order.getDatetime());
             Item item = itemService.queryItemById(order.getItemid());
             orderItem.setItemname(item.getItemname());
+            orderItem.setType(item.getType());
             orderItem.setPrice(item.getPrice());
             ItemPicture itemPicture = itemPictureService.queryItemPicture(order.getItemid());
             orderItem.setItempicture(itemPicture);
@@ -118,6 +123,7 @@ public class OrderController {
             orderItem.setDatetime(order.getDatetime());
             Item item = itemService.queryItemById(order.getItemid());
             orderItem.setItemname(item.getItemname());
+            orderItem.setType(item.getType());
             orderItem.setPrice(item.getPrice());
             ItemPicture itemPicture = itemPictureService.queryItemPicture(order.getItemid());
             orderItem.setItempicture(itemPicture);

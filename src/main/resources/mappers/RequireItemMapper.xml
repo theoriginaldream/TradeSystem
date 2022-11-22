@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.dao.RequireItemMapper">
     <insert id="addRequireItem" parameterType="RequireItem" useGeneratedKeys="true" keyProperty="ritemid">
-        insert into trade.requires (ritemname, detail, price, date, host)
-        values (#{ritemname},#{detail},#{price},#{date},#{host})
+        insert into trade.requires (ritemname, date, host)
+        values (#{ritemname},#{date},#{host})
     </insert>
     
     <delete id="deleteRequireItem" parameterType="int">
@@ -14,7 +14,7 @@
     
     <update id="updateRequireItem" parameterType="RequireItem">
         update trade.requires
-        set ritemname = #{ritemname},detail=#{detail},price = #{price},date = #{date}
+        set ritemname = #{ritemname},date = #{date}
         where ritemid = #{ritemid}
     </update>
     

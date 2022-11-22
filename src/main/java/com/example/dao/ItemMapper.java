@@ -23,7 +23,7 @@ public interface ItemMapper {
     List<Item> queryItemByName(String itemname);
 
     // 按类型搜索商品
-    List<Item> queryItemByType(String schoolzone);
+    List<Item> queryItemByType(@Param("schoolzone") String schoolzone);
 
     // 查询全部商品
     List<Item> queryAllItem();

@@ -1,5 +1,7 @@
 package com.example.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Item{
@@ -7,33 +9,34 @@ public class Item{
     private String itemname;
     private String schoolzone;
     private String type;
-    private String detail;
+//    private String detail;
     private String price;
     private String host;
     private ItemPicture itempicture;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date datetime;
 
     public Item() {
     }
 
-    public Item(int itemid, String itemname, String schoolzone, String type, String detail, String price, String host,Date datetime, ItemPicture itempicture) {
+    public Item(int itemid, String itemname, String schoolzone, String type, String price, String host,Date datetime, ItemPicture itempicture) {
         this.itemid = itemid;
         this.itemname = itemname;
         this.schoolzone = schoolzone;
         this.type = type;
-        this.detail = detail;
+//        this.detail = detail;
         this.price = price;
         this.host = host;
         this.datetime = datetime;
         this.itempicture = itempicture;
     }
 
-    public Item(int itemid, String itemname, String schoolzone, String type, String detail, String price, String host,Date datetime) {
+    public Item(int itemid, String itemname, String schoolzone, String type, String price, String host,Date datetime) {
         this.itemid = itemid;
         this.itemname = itemname;
         this.schoolzone = schoolzone;
         this.type = type;
-        this.detail = detail;
+//        this.detail = detail;
         this.price = price;
         this.host = host;
         this.datetime = datetime;
@@ -63,13 +66,13 @@ public class Item{
         this.schoolzone = schoolzone;
     }
 
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
+//    public String getDetail() {
+//        return detail;
+//    }
+//
+//    public void setDetail(String detail) {
+//        this.detail = detail;
+//    }
 
     public String getPrice() {
         return price;

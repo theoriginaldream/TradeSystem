@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.dao.ItemMapper">
     <insert id="addItem" parameterType="Item" useGeneratedKeys="true" keyProperty="itemid">
-        insert into trade.items (itemname, schoolzone, type, detail, price, host, datetime)
-        values (#{itemname},#{schoolzone},#{type},#{detail},#{price},#{host},#{datetime})
+        insert into trade.items (itemname, schoolzone, type, price, host, datetime)
+        values (#{itemname},#{schoolzone},#{type},#{price},#{host},#{datetime})
     </insert>
     
     <delete id="deleteItem" parameterType="int">
@@ -14,7 +14,7 @@
     
     <update id="updateItem" parameterType="Item">
         update trade.items
-        set itemname = #{itemname},schoolzone=#{schoolzone},type=#{type},detail = #{detail},price = #{price},datetime=#{datetime}
+        set itemname = #{itemname},schoolzone=#{schoolzone},type=#{type},price = #{price},datetime=#{datetime}
         where itemid = #{itemid}
     </update>
     
