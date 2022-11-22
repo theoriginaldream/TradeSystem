@@ -16,6 +16,8 @@ public interface RequireItemService {
 
     List<RequireItem> queryRequireItemByHost(String host);
 
+    List<RequireItem> queryRequireItemByZone(String schoolzone);
+
     List<RequireItem> queryAllRequireItem();
 
     RequireItem queryRequireItemById(int ritemid);

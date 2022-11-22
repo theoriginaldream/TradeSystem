@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.dao.RequireItemMapper">
     <insert id="addRequireItem" parameterType="RequireItem" useGeneratedKeys="true" keyProperty="ritemid">
-        insert into trade.requires (ritemname, date, host)
-        values (#{ritemname},#{date},#{host})
+        insert into trade.requires (ritemname, price, schoolzone, date, host)
+        values (#{ritemname},#{price},#{schoolzone},#{date},#{host})
     </insert>
     
     <delete id="deleteRequireItem" parameterType="int">
@@ -14,7 +14,7 @@
     
     <update id="updateRequireItem" parameterType="RequireItem">
         update trade.requires
-        set ritemname = #{ritemname},date = #{date}
+        set ritemname = #{ritemname},price = #{price},schoolzone = #{schoolzone},date = #{date}
         where ritemid = #{ritemid}
     </update>
     
@@ -26,6 +26,11 @@
     <select id="queryRequireItemByHost" resultType="RequireItem">
         select * from trade.requires
         where host = #{host}
+    </select>
+    
+    <select id="queryRequireItemByZone" resultType="RequireItem">
+        select * from trade.requires
+        where schoolzone = #{schoolzone}
     </select>
     
     <select id="queryAllRequireItem" resultType="RequireItem">

@@ -39,6 +39,11 @@ public class RequireItemServiceImpl implements RequireItemService{
     }
 
     @Override
+    public List<RequireItem> queryRequireItemByZone(String schoolzone) {
+        return requireItemMapper.queryRequireItemByZone(schoolzone);
+    }
+
+    @Override
     public List<RequireItem> queryAllRequireItem() {
         return requireItemMapper.queryAllRequireItem();
     }
