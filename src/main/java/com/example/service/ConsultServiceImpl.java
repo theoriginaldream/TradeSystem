@@ -27,4 +27,15 @@ public class ConsultServiceImpl implements ConsultService{
     public List<Consult> queryAllConsult() {
         return consultMapper.queryAllConsult();
     }
+
+    @Override
+    public Consult queryConsultById(int consultid) {
+        return consultMapper.queryConsultById(consultid);
+    }
+
+    @Override
+    public List<Consult> queryConsultByUserId(String userid) {
+        return consultMapper.queryConsultByUserId(userid);
+    }
+
 }

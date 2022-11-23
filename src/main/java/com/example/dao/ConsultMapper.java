@@ -11,4 +11,9 @@ public interface ConsultMapper {
     int deleteConsult(@Param("consultid") int consultid);
 
     List<Consult> queryAllConsult();
+
+    Consult queryConsultById(@Param("consultid") int consultid);
+
+    List<Consult> queryConsultByUserId(@Param("userid") String userid);
+
 }

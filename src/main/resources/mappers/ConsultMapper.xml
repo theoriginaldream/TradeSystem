@@ -9,12 +9,23 @@
     </insert>
     
     <delete id="deleteConsult" parameterType="int">
-        delete from trade.consults where consultid = #{consultid}
+        delete from trade.consults
+        where consultid = #{consultid}
     </delete>
     
     <select id="queryAllConsult" resultType="Consult">
         select * from trade.consults
         order by datetime
+    </select>
+    
+    <select id="queryConsultById" resultType="Consult">
+        select * from trade.consults
+        where consultid = #{consultid}
+    </select>
+    
+    <select id="queryConsultByUserId" resultType="Consult">
+        select * from trade.consults
+        where userid = #{userid}
     </select>
 
 </mapper>

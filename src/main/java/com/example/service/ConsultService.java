@@ -11,4 +11,9 @@ public interface ConsultService {
     int deleteConsult(int consultid);
 
     List<Consult> queryAllConsult();
+
+    Consult queryConsultById(int consultid);
+
+    List<Consult> queryConsultByUserId(String userid);
+
 }
