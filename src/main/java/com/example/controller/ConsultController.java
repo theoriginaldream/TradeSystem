@@ -1,7 +1,9 @@
 package com.example.controller;
 
 import com.example.pojo.Consult;
+import com.example.pojo.Reply;
 import com.example.service.ConsultService;
+import com.example.service.ReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,10 @@ public class ConsultController {
     @Qualifier("consultServiceImpl")
     private ConsultService consultService;
 
+    @Autowired
+    @Qualifier("replyServiceImpl")
+    private ReplyService replyService;
+
     @RequestMapping("/add")
     @ResponseBody
     public String addConsult(@RequestParam("consult") String consult, HttpSession session){
@@ -38,9 +44,13 @@ public class ConsultController {
     @ResponseBody
     public List<Consult> showAllConsult(HttpSession session){
         String admin = (String) session.getAttribute("admin");
-        List<Consult> consults = consultService.queryAllConsult();
+        if (admin.equals("001")){
+            List<Consult> consults = consultService.queryAllConsult();
+            return consults;
+        }else {
+            return null;
+        }
 
-        return consults;
     }
 
     @RequestMapping(value = "/delete",method = RequestMethod.POST)
@@ -49,4 +59,47 @@ public class ConsultController {
         consultService.deleteConsult(consultid);
         return "success";
     }
+
+    @RequestMapping(value = "/add/reply",method = RequestMethod.POST)
+    @ResponseBody
+    public String CustomerReply(@RequestParam("reply") String reply,
+                                @RequestParam("consultid") int consultid,HttpSession session){
+        String admin = (String) session.getAttribute("admin");
+        if (admin.equals("001")){
+            Reply reply1 = new Reply();
+            reply1.setReply(reply);
+            reply1.setConsultid(consultid);
+            reply1.setUserid(consultService.queryConsultById(consultid).getUserid());
+            reply1.setDatetime(new Date());
+            replyService.addReply(reply1);
+
+            return "success";
+        }else {
+            return "error";
+        }
+
+    }
+
+    @RequestMapping(value = "/mine",method = RequestMethod.GET)
+    @ResponseBody
+    public List<Reply> queryReplyToMe(HttpSession session){
+        String admin = (String) session.getAttribute("admin");
+        List<Reply> replies = replyService.queryReplyByUserId(admin);
+
+        return replies;
+    }
+
+    @RequestMapping(value = "/all",method = RequestMethod.GET)
+    @ResponseBody
+    public List<Reply> queryAllReply(HttpSession session){
+        String admin = (String) session.getAttribute("admin");
+
+        if (admin.equals("001")){
+            List<Reply> replies = replyService.queryAllReply();
+            return replies;
+        }else {
+            return null;
+        }
+    }
+
 }

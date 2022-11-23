@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.ReplyMapper">
+    <insert id="addReply" parameterType="Reply">
+        insert into trade.reply(reply, consultid, userid, datetime)
+        values (#{reply},#{consultid},#{userid},#{datetime})
+    </insert>
+    
+    <delete id="deleteReply" parameterType="int">
+        delete from trade.reply
+        where replyid = #{replyid}
+    </delete>
+    
+    <select id="queryReplyById" resultType="Reply">
+        select * from trade.reply
+        where replyid = #{replyid}
+    </select>
+    
+    <select id="queryReplyByUserId" resultType="Reply">
+        select * from trade.reply
+        where userid = #{userid}
+        order by datetime desc
+    </select>
+    
+    <select id="queryReplyByConsultId" resultType="Reply">
+        select * from trade.reply
+        where consultid = #{consultid}
+    </select>
+    
+    <select id="queryAllReply" resultType="Reply">
+        select * from trade.reply
+        order by datetime desc
+    </select>
+
+</mapper>
