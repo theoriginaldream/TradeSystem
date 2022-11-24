@@ -8,11 +8,11 @@ public interface ShoppingCartService {
 
     int addShoppingCart(ShoppingCart shoppingCart);
 
-    int deleteShoppingCart(int id);
+    int deleteShoppingCart(int shoppingcartid);
 
     int deleteShoppingCartByItemId(int itemid);
 
     List<ShoppingCart> queryShoppingCartByUserId(String userid);
 
-    ShoppingCart queryShoppingCartById(int id);
+    ShoppingCart queryShoppingCartById(int shoppingcartid);
 }

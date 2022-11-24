@@ -11,9 +11,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ShoppingCart {
-    private int id;
+    private int shoppingcartid;
     private String userid;
     private int itemid;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date date;
+    private Item item;
 }
