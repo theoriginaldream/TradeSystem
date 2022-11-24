@@ -9,7 +9,7 @@
     </insert>
     
     <delete id="deleteShoppingCart" parameterType="int">
-        delete from trade.shoppingcart where id = #{id}
+        delete from trade.shoppingcart where shoppingcartid = #{shoppingcartid}
     </delete>
     
     <delete id="deleteShoppingCartByItemId" parameterType="int">
@@ -18,7 +18,7 @@
     
     <select id="queryShoppingCartById" resultType="ShoppingCart">
         select * from trade.shoppingcart
-        where id = #{id}
+        where shoppingcartid = #{shoppingcartid}
     </select>
     
     <select id="queryShoppingCartByUserId" resultType="ShoppingCart">

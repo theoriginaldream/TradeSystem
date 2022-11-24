@@ -468,22 +468,26 @@ public class ItemController {
 
     @RequestMapping(value = "/myShoppingCart",method = RequestMethod.GET)
     @ResponseBody
-    public List<Item> myShoppingCart(HttpSession session,Model model){
+    public List<ShoppingCart> myShoppingCart(HttpSession session,Model model){
         String admin = (String) session.getAttribute("admin");
 
         List<ShoppingCart> shoppingCarts = shoppingCartService.queryShoppingCartByUserId(admin);
 
-        ArrayList<Item> itemList = new ArrayList<>();
-
         for (ShoppingCart shoppingCart : shoppingCarts) {
             Item item = itemService.queryItemById(shoppingCart.getItemid());
             item.setItempicture(itemPictureService.queryItemPicture(item.getItemid()));
-            item.setDatetime(shoppingCart.getDate());
-            itemList.add(item);
+            shoppingCart.setItem(item);
         }
 
 //        model.addAttribute("itemList",itemList);
 
-        return itemList;
+        return shoppingCarts;
+    }
+
+    @RequestMapping(value = "/delete/shoppingCart",method = RequestMethod.POST)
+    @ResponseBody
+    public String deleteShoppingCart(@RequestParam("shoppingcartid") int shoppingcartid){
+        shoppingCartService.deleteShoppingCart(shoppingcartid);
+        return "success";
     }
 }

@@ -19,8 +19,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     }
 
     @Override
-    public int deleteShoppingCart(int id) {
-        return shoppingCartMapper.deleteShoppingCart(id);
+    public int deleteShoppingCart(int shoppingcartid) {
+        return shoppingCartMapper.deleteShoppingCart(shoppingcartid);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     }
 
     @Override
-    public ShoppingCart queryShoppingCartById(int id) {
-        return shoppingCartMapper.queryShoppingCartById(id);
+    public ShoppingCart queryShoppingCartById(int shoppingcartid) {
+        return shoppingCartMapper.queryShoppingCartById(shoppingcartid);
     }
 }
