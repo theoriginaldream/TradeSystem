@@ -1,18 +1,18 @@
 package com.example.controller;
 
 import com.example.pojo.User;
+import com.example.pojo.User2;
 import com.example.service.UserService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+
+import static com.mysql.cj.conf.PropertyKey.password2;
 
 @Controller
 @RequestMapping("/login")
@@ -35,7 +35,7 @@ public class LoginController{
         if (user!=null){
             if (user.getPassword().equals(password)){
                 session.setAttribute("admin",user.getUserid());
-                return "success";
+                return user.getUserid();
             }else {
                 session.setAttribute("msg","密码错误");
                 return "error";
@@ -60,7 +60,11 @@ public class LoginController{
 
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     @ResponseBody
-    public String register(@RequestParam("userid") String userid,@RequestParam("phone") String phone,@RequestParam("password") String password,@RequestParam("password2") String password2,Model model){
+    public String register(@RequestBody User2 user2){
+        String userid = user2.getUserid();
+        String phone = user2.getPhone();
+        String password = user2.getPassword();
+        String password2 = user2.getPassword2();
         if (userService.queryUserByName(userid)==null){
             if (userService.queryUserByPhone(phone)==null){
                 if (password.equals(password2)){
@@ -85,8 +89,11 @@ public class LoginController{
 
     @RequestMapping(value = "/update/pwd",method = RequestMethod.POST)
     @ResponseBody
-    public String updatePassword(@RequestParam("userid")String userid,@RequestParam("phone") String phone,@RequestParam("password") String password,@RequestParam("password2") String password2){
-
+    public String updatePassword(@RequestBody User2 user2){
+        String userid = user2.getUserid();
+        String phone = user2.getPhone();
+        String password = user2.getPassword();
+        String password2 = user2.getPassword2();
         if (userService.queryUserByName(userid)!=null){
             User user = userService.queryUserByName(userid);
             if (phone.equals(user.getPhone())){

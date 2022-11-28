@@ -10,6 +10,41 @@
     
     <!--注解驱动-->
     <mvc:annotation-driven/>
+    <!--<mvc:annotation-driven>-->
+    <!--    <mvc:message-converters register-defaults="true">-->
+    <!--        <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">-->
+    <!--            <property name="supportedMediaTypes">-->
+    <!--                <list>-->
+    <!--                    <value>text/html;charset=UTF-8</value>-->
+    <!--                    <value>application/json</value>-->
+    <!--                </list>-->
+    <!--            </property>-->
+    <!--            <property name="features">-->
+    <!--                <list>-->
+    <!--                    &lt;!&ndash; 输出key时是否使用双引号 &ndash;&gt;-->
+    <!--                    <value>QuoteFieldNames</value>-->
+    <!--                    &lt;!&ndash; 是否输出值为null的字段 &ndash;&gt;-->
+    <!--                    &lt;!&ndash; <value>WriteMapNullValue</value> &ndash;&gt;-->
+    <!--                    &lt;!&ndash; 数值字段如果为null,输出为0,而非null &ndash;&gt;-->
+    <!--                    <value>WriteNullNumberAsZero</value>-->
+    <!--                    &lt;!&ndash; List字段如果为null,输出为[],而非null &ndash;&gt;-->
+    <!--                    <value>WriteNullListAsEmpty</value>-->
+    <!--                    &lt;!&ndash; 字符类型字段如果为null,输出为"",而非null &ndash;&gt;-->
+    <!--                    <value>WriteNullStringAsEmpty</value>-->
+    <!--                    &lt;!&ndash; Boolean字段如果为null,输出为false,而非null &ndash;&gt;-->
+    <!--                    <value>WriteNullBooleanAsFalse</value>-->
+    <!--                    &lt;!&ndash; null String不输出  &ndash;&gt;-->
+    <!--                    <value>WriteNullStringAsEmpty</value>-->
+    <!--                    &lt;!&ndash; null String也要输出  &ndash;&gt;-->
+    <!--                    &lt;!&ndash; <value>WriteMapNullValue</value> &ndash;&gt;-->
+    <!--                    -->
+    <!--                    &lt;!&ndash; Date的日期转换器 &ndash;&gt;-->
+    <!--                    <value>WriteDateUseDateFormat</value>-->
+    <!--                </list>-->
+    <!--            </property>-->
+    <!--        </bean>-->
+    <!--    </mvc:message-converters>-->
+    <!--</mvc:annotation-driven>-->
     
     <!--静态资源过滤-->
     <mvc:default-servlet-handler/>
@@ -20,8 +55,14 @@
     <!--Swagger-->
     <bean class="com.example.config.SwaggerConfig"/>
     
-    <mvc:resources mapping="/swagger-ui.html" location="classpath:/META-INF/resources/"/>
-    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
+    <!--<mvc:resources mapping="/swagger-ui.html" location="classpath:/META-INF/resources/"/>-->
+    <!--<mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>-->
+    <mvc:resources mapping="/css/**" location="/css/"/>
+    <mvc:resources mapping="/images/**" location="/image/"/>
+    <mvc:resources mapping="/js/**" location="/js/"/>
+    <mvc:resources mapping="/img/**" location="/img/"/>
+    <mvc:resources mapping="/pictures/**" location="/pictures/"/>
+    <mvc:resources mapping="/templates/**" location="/templates/"/>
     
     <!--视图解析器-->
     <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
@@ -29,27 +70,32 @@
     <!--    <property name="suffix" value=".jsp"/>-->
     <!--</bean>-->
     
-    <!--<mvc:resources mapping="/static/**" location="/static/"/>-->
+    <!--<mvc:resources mapping="/**" location="classpath:/WEB-INF/templates/"/>-->
+    
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="internalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/templates/"/>
+        <property name="suffix" value=".html"/>
+    </bean>
     
     <!--视图解析器-->
-    <bean id="viewResolver" class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
-        <property name="order" value="1"/>
-        <property name="characterEncoding" value="UTF-8"/>
-        <property name="templateEngine">
-            <bean class="org.thymeleaf.spring5.SpringTemplateEngine">
-                <property name="templateResolver">
-                    <bean class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
-                        <!--视图前缀-->
-                        <property name="prefix" value="/WEB-INF/templates/"/>
-                        <!--视图后缀-->
-                        <property name="suffix" value=".html"/>
-                        <property name="templateMode" value="HTML5"/>
-                        <property name="characterEncoding" value="UTF-8"/>
-                    </bean>
-                </property>
-            </bean>
-        </property>
-    </bean>
+    <!--<bean id="viewResolver" class="org.thymeleaf.spring5.view.ThymeleafViewResolver">-->
+    <!--    <property name="order" value="1"/>-->
+    <!--    <property name="characterEncoding" value="UTF-8"/>-->
+    <!--    <property name="templateEngine">-->
+    <!--        <bean class="org.thymeleaf.spring5.SpringTemplateEngine">-->
+    <!--            <property name="templateResolver">-->
+    <!--                <bean class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">-->
+    <!--                    &lt;!&ndash;视图前缀&ndash;&gt;-->
+    <!--                    <property name="prefix" value="/WEB-INF/templates/"/>-->
+    <!--                    &lt;!&ndash;视图后缀&ndash;&gt;-->
+    <!--                    <property name="suffix" value=".html"/>-->
+    <!--                    <property name="templateMode" value="HTML5"/>-->
+    <!--                    <property name="characterEncoding" value="UTF-8"/>-->
+    <!--                </bean>-->
+    <!--            </property>-->
+    <!--        </bean>-->
+    <!--    </property>-->
+    <!--</bean>-->
     
     <!--<mvc:annotation-driven>-->
     <!--    <mvc:message-converters>-->
@@ -85,5 +131,15 @@
     <!--        <bean class="com.example.config.LoginHandlerInterceptor"/>-->
     <!--    </mvc:interceptor>-->
     <!--</mvc:interceptors>-->
+    
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/templates/**"/>
+            <mvc:exclude-mapping path="/templates/userLogin.html"/>
+            <mvc:exclude-mapping path="/templates/forgetPwd.html"/>
+            <mvc:exclude-mapping path="/templates/register.html"/>
+            <bean class="com.example.config.LoginHandlerInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
 </beans>

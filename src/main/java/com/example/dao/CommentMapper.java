@@ -17,4 +17,6 @@ public interface CommentMapper {
     Comment queryCommentById(@Param("commentid") int commentid);
 
     List<Comment> queryCommentByItemHost(@Param("userid") String userid);
+
+    List<Comment> queryCommentRequireByItemHost(@Param("userid") String userid);
 }

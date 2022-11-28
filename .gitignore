@@ -23,7 +23,8 @@
 hs_err_pid*
 
 src/main/web/
-src/main/webapp/
+src/main/webapp
+src/test/java/webapp/
 target
 out
 src/test/webapp/

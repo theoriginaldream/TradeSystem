@@ -484,9 +484,9 @@ public class ItemController {
         return shoppingCarts;
     }
 
-    @RequestMapping(value = "/delete/shoppingCart",method = RequestMethod.POST)
+    @RequestMapping(value = "/delete/shoppingCart/{shoppingcartid}",method = RequestMethod.POST)
     @ResponseBody
-    public String deleteShoppingCart(@RequestParam("shoppingcartid") int shoppingcartid){
+    public String deleteShoppingCart(@PathVariable("shoppingcartid") int shoppingcartid){
         shoppingCartService.deleteShoppingCart(shoppingcartid);
         return "success";
     }
