@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.dao.ShoppingCartMapper">
-    <insert id="addShoppingCart" parameterType="ShoppingCart" useGeneratedKeys="true" keyProperty="id">
+    <insert id="addShoppingCart" parameterType="ShoppingCart" useGeneratedKeys="true" keyProperty="shoppingcartid">
         insert into trade.shoppingcart (userid, itemid, date)
         values (#{userid},#{itemid},#{date})
     </insert>

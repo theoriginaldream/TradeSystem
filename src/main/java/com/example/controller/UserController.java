@@ -42,6 +42,10 @@ public class UserController {
     @Qualifier("itemServiceImpl")
     private ItemService itemService;
 
+    @Autowired
+    @Qualifier("requireItemServiceImpl")
+    private RequireItemService requireItemService;
+
     @RequestMapping(value = "/user",method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> userShow(HttpSession session, Model model){
@@ -173,17 +177,40 @@ public class UserController {
 
         List<Comment> commentList = commentService.queryCommentByItemHost(admin);
 
+        List<Comment> commentList2 = commentService.queryCommentRequireByItemHost(admin);
+
         List<CommentItem> comments = new ArrayList<>();
 
-        for (Comment comment : commentList) {
-            CommentItem commentItem = new CommentItem();
-            commentItem.setCommentid(comment.getCommentid());
-            commentItem.setComment(comment.getComment());
-            commentItem.setDatetime(comment.getDatetime());
-            commentItem.setItemid(comment.getItemid());
-            commentItem.setUserid(comment.getUserid());
-            commentItem.setItemname(itemService.queryItemById(comment.getItemid()).getItemname());
-            comments.add(commentItem);
+        int a = commentList.size();
+        int b = commentList2.size();
+        int flag = 0;
+
+        for (int i = 0; i < a; i++) {
+            Comment comment = commentList.get(i);
+            for (int j = flag; j < b; j++){
+                Comment comment1 = commentList2.get(j);
+                if (comment.getDatetime().getTime()>comment1.getDatetime().getTime()){
+                    CommentItem commentItem = new CommentItem();
+                    commentItem.setCommentid(comment.getCommentid());
+                    commentItem.setComment(comment.getComment());
+                    commentItem.setDatetime(comment.getDatetime());
+                    commentItem.setItemid(comment.getItemid());
+                    commentItem.setUserid(comment.getUserid());
+                    commentItem.setItemname(itemService.queryItemById(comment.getItemid()).getItemname());
+                    comments.add(commentItem);
+                    break;
+                }else {
+                    CommentItem commentItem = new CommentItem();
+                    commentItem.setCommentid(comment1.getCommentid());
+                    commentItem.setComment(comment1.getComment());
+                    commentItem.setDatetime(comment1.getDatetime());
+                    commentItem.setItemid(comment1.getItemid());
+                    commentItem.setUserid(comment1.getUserid());
+                    commentItem.setItemname(requireItemService.queryRequireItemById(comment1.getItemid()).getRitemname());
+                    comments.add(commentItem);
+                    flag++;
+                }
+            }
         }
 
         return comments;

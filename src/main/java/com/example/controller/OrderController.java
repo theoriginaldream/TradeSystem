@@ -41,9 +41,9 @@ public class OrderController {
     @Qualifier("shoppingCartServiceImpl")
     private ShoppingCartService shoppingCartService;
 
-    @RequestMapping(value = "/add/order",method = RequestMethod.POST)
+    @RequestMapping(value = "/add/order/{itemid}",method = RequestMethod.POST)
     @ResponseBody
-    public String addOrder(@RequestParam("itemid") int itemid, HttpSession session){
+    public String addOrder(@PathVariable("itemid") int itemid, HttpSession session){
         Order order = new Order();
         order.setItemid(itemid);
         Item item = itemService.queryItemById(itemid);

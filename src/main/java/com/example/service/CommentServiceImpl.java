@@ -42,4 +42,9 @@ public class CommentServiceImpl implements CommentService{
     public List<Comment> queryCommentByItemHost(String userid) {
         return commentMapper.queryCommentByItemHost(userid);
     }
+
+    @Override
+    public List<Comment> queryCommentRequireByItemHost(String userid) {
+        return commentMapper.queryCommentRequireByItemHost(userid);
+    }
 }

@@ -36,5 +36,12 @@
         where comment.itemid = items.itemid and items.host = #{userid}
         order by comment.datetime desc
     </select>
+    
+    <select id="queryCommentRequireByItemHost" resultType="Comment">
+        select commentid,comment.itemid,userid,comment,comment.datetime
+        from trade.comment,trade.requires
+        where comment.itemid = requires.ritemid and requires.host = #{userid}
+        order by comment.datetime desc
+    </select>
 
 </mapper>
