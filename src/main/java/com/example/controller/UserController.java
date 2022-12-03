@@ -112,9 +112,12 @@ public class UserController {
     public String updateUser(@RequestParam("userid") String userid, @RequestParam(value = "name",required = false) String name,
                              @RequestParam(value = "schoolzone",required = false) String schoolzone,
                              @RequestParam(value = "introduce",required = false) String introduce,
-                             @RequestParam(value = "headpicture",required = false) MultipartFile headpicture,
+                             @RequestParam(value = "headpicture",required = false) MultipartFile[] headpictures,
                              HttpSession session, Model model) throws IOException {
         String admin = (String) session.getAttribute("admin");
+        System.out.println(name);
+        MultipartFile headpicture = headpictures[0];
+        System.out.println(headpicture);
         if (userid.equals(admin)){
             User user = userService.queryUserByName(userid);
             user.setName(name);

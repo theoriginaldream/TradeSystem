@@ -7,10 +7,7 @@ import com.example.service.ReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -44,7 +41,7 @@ public class ConsultController {
     @ResponseBody
     public List<Consult> showAllConsult(HttpSession session){
         String admin = (String) session.getAttribute("admin");
-        if (admin.equals("001")){
+        if (admin.equals("10001")){
             List<Consult> consults = consultService.queryAllConsult();
             return consults;
         }else {
@@ -53,19 +50,26 @@ public class ConsultController {
 
     }
 
-    @RequestMapping(value = "/delete",method = RequestMethod.POST)
+    @RequestMapping(value = "/my",method = RequestMethod.GET)
     @ResponseBody
-    public String deleteConsult(@RequestParam("consultid") int consultid, HttpSession session){
-        consultService.deleteConsult(consultid);
+    public List<Consult> showMyConsult(HttpSession session){
+        String admin = (String) session.getAttribute("admin");
+        List<Consult> consults = consultService.queryConsultByUserId(admin);
+        return consults;
+    }
+
+    @RequestMapping(value = "/delete/{consultid}",method = RequestMethod.POST)
+    @ResponseBody
+    public String deleteConsult(@PathVariable("consultid") String consultid, HttpSession session){
+        consultService.deleteConsult(Integer.parseInt(consultid));
         return "success";
     }
 
     @RequestMapping(value = "/add/reply",method = RequestMethod.POST)
     @ResponseBody
-    public String CustomerReply(@RequestParam("reply") String reply,
-                                @RequestParam("consultid") int consultid,HttpSession session){
+    public String CustomerReply(@RequestParam("reply") String reply, @RequestParam("consultid") int consultid,HttpSession session){
         String admin = (String) session.getAttribute("admin");
-        if (admin.equals("001")){
+        if (admin.equals("10001")){
             Reply reply1 = new Reply();
             reply1.setReply(reply);
             reply1.setConsultid(consultid);
@@ -94,7 +98,7 @@ public class ConsultController {
     public List<Reply> queryAllReply(HttpSession session){
         String admin = (String) session.getAttribute("admin");
 
-        if (admin.equals("001")){
+        if (admin.equals("10001")){
             List<Reply> replies = replyService.queryAllReply();
             return replies;
         }else {
