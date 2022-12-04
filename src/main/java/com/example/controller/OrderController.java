@@ -81,6 +81,9 @@ public class OrderController {
         if (admin!=null && "未完成".equals(order.getStatus()) && admin.equals(order.getBuyer())){
             order.setStatus("已完成");
             orderService.updateOrder(order);
+            Item item = itemService.queryItemById(order.getItemid());
+            item.setStatus("已出售");
+            itemService.updateItem(item);
             return "success";
         }else {
             return "无权限更改";

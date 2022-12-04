@@ -16,10 +16,12 @@ public class Item{
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date datetime;
 
+    private String status;
+
     public Item() {
     }
 
-    public Item(int itemid, String itemname, String schoolzone, String type, String price, String host,Date datetime, ItemPicture itempicture) {
+    public Item(int itemid, String itemname, String schoolzone, String type, String price, String host,Date datetime,String status, ItemPicture itempicture) {
         this.itemid = itemid;
         this.itemname = itemname;
         this.schoolzone = schoolzone;
@@ -28,10 +30,11 @@ public class Item{
         this.price = price;
         this.host = host;
         this.datetime = datetime;
+        this.status = status;
         this.itempicture = itempicture;
     }
 
-    public Item(int itemid, String itemname, String schoolzone, String type, String price, String host,Date datetime) {
+    public Item(int itemid, String itemname, String schoolzone, String type, String price, String host,Date datetime,String status) {
         this.itemid = itemid;
         this.itemname = itemname;
         this.schoolzone = schoolzone;
@@ -40,6 +43,7 @@ public class Item{
         this.price = price;
         this.host = host;
         this.datetime = datetime;
+        this.status = status;
     }
 
     public int getItemid() {
@@ -112,5 +116,13 @@ public class Item{
 
     public void setDatetime(Date datetime) {
         this.datetime = datetime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
