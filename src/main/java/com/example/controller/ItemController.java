@@ -54,11 +54,12 @@ public class ItemController {
     public String addItem(@RequestParam("itemname") String itemname, @RequestParam(value = "schoolzone",required = false) String schoolzone,
                           @RequestParam(value = "type",required = false) String type,
                           @RequestParam(value = "price",required = false) String price,
-                          @RequestParam(value = "picture1",required = false) MultipartFile picture1,
-                          @RequestParam(value = "picture2",required = false) MultipartFile picture2,
-                          @RequestParam(value = "picture3",required = false) MultipartFile picture3,
-                          @RequestParam(value = "picture4",required = false) MultipartFile picture4,
-                          @RequestParam(value = "picture5",required = false) MultipartFile picture5,
+                          @RequestParam(value = "pictures",required = false) MultipartFile[] pictures,
+//                          @RequestParam(value = "picture1",required = false) MultipartFile picture1,
+//                          @RequestParam(value = "picture2",required = false) MultipartFile picture2,
+//                          @RequestParam(value = "picture3",required = false) MultipartFile picture3,
+//                          @RequestParam(value = "picture4",required = false) MultipartFile picture4,
+//                          @RequestParam(value = "picture5",required = false) MultipartFile picture5,
                           HttpSession session) throws IOException {
         Item item = new Item();
         item.setItemname(itemname);
@@ -75,7 +76,8 @@ public class ItemController {
         itemPicture.setItemid(item.getItemid());
         int count = 0;
 
-        for (MultipartFile picture : Arrays.asList(picture1,picture2,picture3,picture4,picture5)) {
+//        for (MultipartFile picture : Arrays.asList(picture1,picture2,picture3,picture4,picture5)) {
+        for (MultipartFile picture : pictures) {
             count++;
             if (picture!=null){
                 String oldFileName = picture.getOriginalFilename();
@@ -186,18 +188,19 @@ public class ItemController {
     @ResponseBody
     public String updateItem(@RequestParam("itemid") int itemid, @RequestParam("itemname") String itemname,
                              @RequestParam(value = "schoolzone",required = false) String schoolZone,
-                             @RequestParam(value = "type",required = false) String type,
+//                             @RequestParam(value = "type",required = false) String type,
                              @RequestParam(value = "price",required = false) String price,
-                             @RequestParam(value = "picture1",required = false) MultipartFile picture1,
-                             @RequestParam(value = "picture2",required = false) MultipartFile picture2,
-                             @RequestParam(value = "picture3",required = false) MultipartFile picture3,
-                             @RequestParam(value = "picture4",required = false) MultipartFile picture4,
-                             @RequestParam(value = "picture5",required = false) MultipartFile picture5,
+                             @RequestParam(value = "pictures",required = false) MultipartFile[] pictures,
+//                             @RequestParam(value = "picture1",required = false) MultipartFile picture1,
+//                             @RequestParam(value = "picture2",required = false) MultipartFile picture2,
+//                             @RequestParam(value = "picture3",required = false) MultipartFile picture3,
+//                             @RequestParam(value = "picture4",required = false) MultipartFile picture4,
+//                             @RequestParam(value = "picture5",required = false) MultipartFile picture5,
                              HttpSession session) throws IOException {
         Item item = itemService.queryItemById(itemid);
         item.setItemname(itemname);
         item.setSchoolzone(schoolZone);
-        item.setType(type);
+//        item.setType(type);
 //        item.setDetail(detail);
         item.setPrice(price);
         item.setDatetime(new Date());
@@ -209,7 +212,7 @@ public class ItemController {
         int count = 0;
         ItemPicture itemPicture = itemPictureService.queryItemPicture(itemid);
         if (itemPicture!=null){
-            for (MultipartFile picture : Arrays.asList(picture1,picture2,picture3,picture4,picture5)) {
+            for (MultipartFile picture : pictures) {
                 count ++;
                 if (picture != null){
                     String oldFileName = picture.getOriginalFilename();
@@ -276,7 +279,7 @@ public class ItemController {
         }else {
             itemPicture = new ItemPicture();
             itemPicture.setItemid(itemid);
-            for (MultipartFile picture : Arrays.asList(picture1,picture2,picture3,picture4,picture5)) {
+            for (MultipartFile picture : pictures) {
                 count ++;
                 if (picture != null){
                     String oldFileName = picture.getOriginalFilename();
