@@ -190,12 +190,12 @@ public class ItemController {
                              @RequestParam(value = "schoolzone",required = false) String schoolZone,
 //                             @RequestParam(value = "type",required = false) String type,
                              @RequestParam(value = "price",required = false) String price,
-                             @RequestParam(value = "pictures",required = false) MultipartFile[] pictures,
-//                             @RequestParam(value = "picture1",required = false) MultipartFile picture1,
-//                             @RequestParam(value = "picture2",required = false) MultipartFile picture2,
-//                             @RequestParam(value = "picture3",required = false) MultipartFile picture3,
-//                             @RequestParam(value = "picture4",required = false) MultipartFile picture4,
-//                             @RequestParam(value = "picture5",required = false) MultipartFile picture5,
+//                             @RequestParam(value = "pictures",required = false) MultipartFile[] pictures,
+                             @RequestParam(value = "picture1",required = false) MultipartFile picture1,
+                             @RequestParam(value = "picture2",required = false) MultipartFile picture2,
+                             @RequestParam(value = "picture3",required = false) MultipartFile picture3,
+                             @RequestParam(value = "picture4",required = false) MultipartFile picture4,
+                             @RequestParam(value = "picture5",required = false) MultipartFile picture5,
                              HttpSession session) throws IOException {
         Item item = itemService.queryItemById(itemid);
         item.setItemname(itemname);
@@ -212,7 +212,8 @@ public class ItemController {
         int count = 0;
         ItemPicture itemPicture = itemPictureService.queryItemPicture(itemid);
         if (itemPicture!=null){
-            for (MultipartFile picture : pictures) {
+//            for (MultipartFile picture : pictures) {
+            for (MultipartFile picture : Arrays.asList(picture1,picture2,picture3,picture4,picture5)) {
                 count ++;
                 if (picture != null){
                     String oldFileName = picture.getOriginalFilename();
@@ -279,7 +280,8 @@ public class ItemController {
         }else {
             itemPicture = new ItemPicture();
             itemPicture.setItemid(itemid);
-            for (MultipartFile picture : pictures) {
+//            for (MultipartFile picture : pictures) {
+            for (MultipartFile picture : Arrays.asList(picture1,picture2,picture3,picture4,picture5)) {
                 count ++;
                 if (picture != null){
                     String oldFileName = picture.getOriginalFilename();
