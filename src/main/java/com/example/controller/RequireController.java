@@ -186,12 +186,12 @@ public class RequireController {
                                 @RequestParam("ritemname") String ritemname,
 //                                @RequestParam(value = "price",required = false) String price,
 //                                @RequestParam(value = "schoolzone",required = false) String schoolzone,
-                                @RequestParam(value = "pictures",required = false) MultipartFile[] pictures,
-//                                @RequestParam(value = "picture1",required = false) MultipartFile picture1,
-//                                @RequestParam(value = "picture2",required = false) MultipartFile picture2,
-//                                @RequestParam(value = "picture3",required = false) MultipartFile picture3,
-//                                @RequestParam(value = "picture4",required = false) MultipartFile picture4,
-//                                @RequestParam(value = "picture5",required = false) MultipartFile picture5,
+//                                @RequestParam(value = "pictures",required = false) MultipartFile[] pictures,
+                                @RequestParam(value = "picture1",required = false) MultipartFile picture1,
+                                @RequestParam(value = "picture2",required = false) MultipartFile picture2,
+                                @RequestParam(value = "picture3",required = false) MultipartFile picture3,
+                                @RequestParam(value = "picture4",required = false) MultipartFile picture4,
+                                @RequestParam(value = "picture5",required = false) MultipartFile picture5,
                                 HttpSession session,Model model) throws IOException {
         RequireItem requireItem = requireItemService.queryRequireItemById(ritemid);
         requireItem.setRitemname(ritemname);
@@ -205,8 +205,8 @@ public class RequireController {
         int count = 0;
         ItemPicture itemPicture = itemPictureService.queryItemPicture(ritemid);
         if (itemPicture!=null){
-//            for (MultipartFile picture : Arrays.asList(picture1,picture2,picture3,picture4,picture5)) {
-            for (MultipartFile picture : pictures) {
+            for (MultipartFile picture : Arrays.asList(picture1,picture2,picture3,picture4,picture5)) {
+//            for (MultipartFile picture : pictures) {
                 count ++;
                 if (picture != null){
                     String oldFileName = picture.getOriginalFilename();
@@ -273,8 +273,8 @@ public class RequireController {
         }else {
             itemPicture = new ItemPicture();
             itemPicture.setItemid(ritemid);
-//            for (MultipartFile picture : Arrays.asList(picture1,picture2,picture3,picture4,picture5)) {
-            for (MultipartFile picture : pictures) {
+            for (MultipartFile picture : Arrays.asList(picture1,picture2,picture3,picture4,picture5)) {
+//            for (MultipartFile picture : pictures) {
                 count ++;
                 if (picture != null){
                     String oldFileName = picture.getOriginalFilename();
