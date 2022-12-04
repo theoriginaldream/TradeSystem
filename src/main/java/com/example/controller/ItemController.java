@@ -70,6 +70,7 @@ public class ItemController {
         String host = (String) session.getAttribute("admin");
         item.setHost(host);
         item.setDatetime(new Date());
+        item.setStatus("未出售");
         itemService.addItem(item);
 
         ItemPicture itemPicture = new ItemPicture();

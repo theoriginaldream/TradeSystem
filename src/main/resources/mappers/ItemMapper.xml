@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.dao.ItemMapper">
     <insert id="addItem" parameterType="Item" useGeneratedKeys="true" keyProperty="itemid">
-        insert into trade.items (itemname, schoolzone, type, price, host, datetime)
-        values (#{itemname},#{schoolzone},#{type},#{price},#{host},#{datetime})
+        insert into trade.items (itemname, schoolzone, type, price, host, datetime,status)
+        values (#{itemname},#{schoolzone},#{type},#{price},#{host},#{datetime},#{status})
     </insert>
     
     <delete id="deleteItem" parameterType="int">
@@ -14,27 +14,29 @@
     
     <update id="updateItem" parameterType="Item">
         update trade.items
-        set itemname = #{itemname},schoolzone=#{schoolzone},type=#{type},price = #{price},datetime=#{datetime}
+        set itemname = #{itemname},schoolzone=#{schoolzone},type=#{type},price = #{price},datetime=#{datetime},status = #{status}
         where itemid = #{itemid}
     </update>
     
     <select id="queryItemByAllName" resultType="Item">
         select * from trade.items
-        where itemname = #{itemname}
+        where itemname = #{itemname} and status = '未出售'
     </select>
     
     <select id="queryItemByName" resultType="Item">
         select * from trade.items
         where itemname like concat('%',#{itemname},'%')
+        and status = '未出售'
     </select>
     
     <select id="queryItemByType" resultType="Item">
         select * from trade.items
-        where schoolzone = #{schoolzone}
+        where schoolzone = #{schoolzone} and status = '未出售'
     </select>
     
     <select id="queryAllItem" resultType="Item">
         select * from trade.items
+        where status = '未出售'
     </select>
     
     <select id="queryItemById" resultType="Item">
