@@ -321,56 +321,62 @@ public class ItemController {
         itemService.deleteItem(itemid);
         ItemPicture itemPicture = itemPictureService.queryItemPicture(itemid);
 
-        String filePath = session.getServletContext().getRealPath("pictures");
+        Item item = itemService.queryItemById(itemid);
+        item.setStatus("已下架");
+        String admin = (String) session.getAttribute("admin");
 
-        int count = 1;
+        shoppingCartService.deleteShoppingCartByItemIdAndUserId(itemid,admin);
 
-        while (itemPicture!=null && count<=5){
-            if (count==1){
-                if (itemPicture.getItempicture()!=null){
-                    String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture();
-                    File oldfile = new File(oldItemPicturePath);
-                    if (oldfile.exists()) {
-                        oldfile.delete();
-                    }
-                }
-            } else if (count==2) {
-                if (itemPicture.getItempicture2()!=null){
-                    String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture2();
-                    File oldfile = new File(oldItemPicturePath);
-                    if (oldfile.exists()) {
-                        oldfile.delete();
-                    }
-                }
-            } else if (count==3) {
-                if (itemPicture.getItempicture3()!=null){
-                    String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture3();
-                    File oldfile = new File(oldItemPicturePath);
-                    if (oldfile.exists()) {
-                        oldfile.delete();
-                    }
-                }
-            } else if (count==4) {
-                if (itemPicture.getItempicture4()!=null){
-                    String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture4();
-                    File oldfile = new File(oldItemPicturePath);
-                    if (oldfile.exists()) {
-                        oldfile.delete();
-                    }
-                }
-            } else if (count==5) {
-                if (itemPicture.getItempicture5()!=null){
-                    String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture5();
-                    File oldfile = new File(oldItemPicturePath);
-                    if (oldfile.exists()) {
-                        oldfile.delete();
-                    }
-                }
-            }
-            count ++;
-        }
+//        String filePath = session.getServletContext().getRealPath("pictures");
+//
+//        int count = 1;
+//
+//        while (itemPicture!=null && count<=5){
+//            if (count==1){
+//                if (itemPicture.getItempicture()!=null){
+//                    String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture();
+//                    File oldfile = new File(oldItemPicturePath);
+//                    if (oldfile.exists()) {
+//                        oldfile.delete();
+//                    }
+//                }
+//            } else if (count==2) {
+//                if (itemPicture.getItempicture2()!=null){
+//                    String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture2();
+//                    File oldfile = new File(oldItemPicturePath);
+//                    if (oldfile.exists()) {
+//                        oldfile.delete();
+//                    }
+//                }
+//            } else if (count==3) {
+//                if (itemPicture.getItempicture3()!=null){
+//                    String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture3();
+//                    File oldfile = new File(oldItemPicturePath);
+//                    if (oldfile.exists()) {
+//                        oldfile.delete();
+//                    }
+//                }
+//            } else if (count==4) {
+//                if (itemPicture.getItempicture4()!=null){
+//                    String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture4();
+//                    File oldfile = new File(oldItemPicturePath);
+//                    if (oldfile.exists()) {
+//                        oldfile.delete();
+//                    }
+//                }
+//            } else if (count==5) {
+//                if (itemPicture.getItempicture5()!=null){
+//                    String oldItemPicturePath = filePath + "/" + itemPicture.getItempicture5();
+//                    File oldfile = new File(oldItemPicturePath);
+//                    if (oldfile.exists()) {
+//                        oldfile.delete();
+//                    }
+//                }
+//            }
+//            count ++;
+//        }
 
-        itemPictureService.deleteItemPicture(itemid);
+//        itemPictureService.deleteItemPicture(itemid);
 
         return "success";
     }

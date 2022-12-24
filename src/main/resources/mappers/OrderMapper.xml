@@ -26,10 +26,12 @@
     <select id="queryOrderBySeller" resultType="Order">
         select * from  trade.orders
         where seller = #{seller}
+        order by datetime desc
     </select>
     
     <select id="queryOrderByBuyer" resultType="Order">
         select * from  trade.orders
         where buyer = #{buyer}
+        order by datetime desc
     </select>
 </mapper>

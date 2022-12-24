@@ -21,20 +21,24 @@
     <select id="queryRequireItemByName" resultType="RequireItem">
         select * from trade.requires
         where ritemname like concat('%',#{ritemname},'%')
+        order by date desc
     </select>
     
     <select id="queryRequireItemByHost" resultType="RequireItem">
         select * from trade.requires
         where host = #{host}
+        order by date desc
     </select>
     
     <select id="queryRequireItemByZone" resultType="RequireItem">
         select * from trade.requires
         where schoolzone = #{schoolzone}
+        order by date desc
     </select>
     
     <select id="queryAllRequireItem" resultType="RequireItem">
         select * from trade.requires
+        order by date desc
     </select>
     
     <select id="queryRequireItemById" resultType="RequireItem">

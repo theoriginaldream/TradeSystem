@@ -16,6 +16,11 @@
         delete from trade.shoppingcart where itemid = #{itemid}
     </delete>
     
+    <delete id="deleteShoppingCartByItemIdAndUserId">
+        delete from trade.shoppingcart
+        where itemid = #{itemId} and userid = #{userId}
+    </delete>
+    
     <select id="queryShoppingCartById" resultType="ShoppingCart">
         select * from trade.shoppingcart
         where shoppingcartid = #{shoppingcartid}

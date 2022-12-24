@@ -13,7 +13,7 @@ public class Item{
     private String price;
     private String host;
     private ItemPicture itempicture;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date datetime;
 
     private String status;

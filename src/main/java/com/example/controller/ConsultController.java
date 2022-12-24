@@ -2,8 +2,10 @@ package com.example.controller;
 
 import com.example.pojo.Consult;
 import com.example.pojo.Reply;
+import com.example.pojo.User;
 import com.example.service.ConsultService;
 import com.example.service.ReplyService;
+import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,10 @@ public class ConsultController {
     @Qualifier("replyServiceImpl")
     private ReplyService replyService;
 
+    @Autowired
+    @Qualifier("userServiceImpl")
+    private UserService userService;
+
     @RequestMapping("/add")
     @ResponseBody
     public String addConsult(@RequestParam("consult") String consult, HttpSession session){
@@ -41,7 +47,7 @@ public class ConsultController {
     @ResponseBody
     public List<Consult> showAllConsult(HttpSession session){
         String admin = (String) session.getAttribute("admin");
-        if (admin.equals("10001")){
+        if (admin.equals("00001")){
             List<Consult> consults = consultService.queryAllConsult();
             return consults;
         }else {
@@ -67,17 +73,31 @@ public class ConsultController {
 
     @RequestMapping(value = "/add/reply",method = RequestMethod.POST)
     @ResponseBody
-    public String CustomerReply(@RequestParam("reply") String reply, @RequestParam("consultid") int consultid,HttpSession session){
+    public String CustomerReply(@RequestParam("reply") String reply, @RequestParam("consultid") String consultid,HttpSession session){
         String admin = (String) session.getAttribute("admin");
-        if (admin.equals("10001")){
-            Reply reply1 = new Reply();
-            reply1.setReply(reply);
-            reply1.setConsultid(consultid);
-            reply1.setUserid(consultService.queryConsultById(consultid).getUserid());
-            reply1.setDatetime(new Date());
-            replyService.addReply(reply1);
+        if (admin.equals("00001")){
+            if (!consultid.equals("00001")){
+                Reply reply1 = new Reply();
+                reply1.setReply(reply);
+                reply1.setConsultid(Integer.parseInt(consultid));
+                reply1.setUserid(consultService.queryConsultById(Integer.parseInt(consultid)).getUserid());
+                reply1.setDatetime(new Date());
+                replyService.addReply(reply1);
 
-            return "success";
+                return "success";
+            }else {
+                for (User user : userService.queryAllUser()) {
+                    Reply reply1 = new Reply();
+                    reply1.setReply(reply);
+                    reply1.setConsultid(0);
+                    reply1.setUserid(user.getUserid());
+                    reply1.setDatetime(new Date());
+                    replyService.addReply(reply1);
+                }
+
+                return "success";
+            }
+
         }else {
             return "error";
         }
@@ -98,7 +118,7 @@ public class ConsultController {
     public List<Reply> queryAllReply(HttpSession session){
         String admin = (String) session.getAttribute("admin");
 
-        if (admin.equals("10001")){
+        if (admin.equals("00001")){
             List<Reply> replies = replyService.queryAllReply();
             return replies;
         }else {

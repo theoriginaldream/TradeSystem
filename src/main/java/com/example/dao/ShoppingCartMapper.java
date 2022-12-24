@@ -13,6 +13,8 @@ public interface ShoppingCartMapper {
 
     int deleteShoppingCartByItemId(@Param("itemid") int itemid);
 
+    int deleteShoppingCartByItemIdAndUserId(@Param("itemId") int itemId,@Param("userId") String userId);
+
     List<ShoppingCart> queryShoppingCartByUserId(@Param("userid") String userid);
 
     ShoppingCart queryShoppingCartById(@Param("shoppingcartid") int shoppingcartid);
