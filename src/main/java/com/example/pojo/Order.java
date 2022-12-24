@@ -16,6 +16,6 @@ public class Order {
     private String buyer;
     private String seller;
     private String status;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date datetime;
 }

@@ -29,6 +29,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     }
 
     @Override
+    public int deleteShoppingCartByItemIdAndUserId(int itemId, String userId) {
+        return shoppingCartMapper.deleteShoppingCartByItemIdAndUserId(itemId,userId);
+    }
+
+    @Override
     public List<ShoppingCart> queryShoppingCartByUserId(String userid) {
         return shoppingCartMapper.queryShoppingCartByUserId(userid);
     }

@@ -115,7 +115,6 @@ public class UserController {
                              @RequestParam(value = "headpicture",required = false) MultipartFile[] headpictures,
                              HttpSession session, Model model) throws IOException {
         String admin = (String) session.getAttribute("admin");
-        System.out.println(name);
         MultipartFile headpicture = headpictures[0];
         System.out.println(headpicture);
         if (userid.equals(admin)){

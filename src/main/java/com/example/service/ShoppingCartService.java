@@ -12,6 +12,8 @@ public interface ShoppingCartService {
 
     int deleteShoppingCartByItemId(int itemid);
 
+    int deleteShoppingCartByItemIdAndUserId(int itemId,String userId);
+
     List<ShoppingCart> queryShoppingCartByUserId(String userid);
 
     ShoppingCart queryShoppingCartById(int shoppingcartid);

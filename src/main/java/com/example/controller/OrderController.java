@@ -54,7 +54,7 @@ public class OrderController {
         order.setStatus("未完成");
         orderService.addOrder(order);
 
-        shoppingCartService.deleteShoppingCartByItemId(itemid);
+//        shoppingCartService.deleteShoppingCartByItemIdAndUserId(itemid,admin);
 
         return "success";
     }

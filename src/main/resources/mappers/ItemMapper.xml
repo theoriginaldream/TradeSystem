@@ -21,22 +21,26 @@
     <select id="queryItemByAllName" resultType="Item">
         select * from trade.items
         where itemname = #{itemname} and status = '未出售'
+        order by itemid desc
     </select>
     
     <select id="queryItemByName" resultType="Item">
         select * from trade.items
         where itemname like concat('%',#{itemname},'%')
         and status = '未出售'
+        order by itemid desc
     </select>
     
     <select id="queryItemByType" resultType="Item">
         select * from trade.items
         where schoolzone = #{schoolzone} and status = '未出售'
+        order by itemid desc
     </select>
     
     <select id="queryAllItem" resultType="Item">
         select * from trade.items
         where status = '未出售'
+        order by itemid desc
     </select>
     
     <select id="queryItemById" resultType="Item">
@@ -47,5 +51,6 @@
     <select id="queryItemByHost" resultType="Item">
         select * from  trade.items
         where host = #{host}
+        order by itemid desc
     </select>
 </mapper>

@@ -27,6 +27,7 @@
     <select id="queryReplyByConsultId" resultType="Reply">
         select * from trade.reply
         where consultid = #{consultid}
+        order by datetime desc
     </select>
     
     <select id="queryAllReply" resultType="Reply">

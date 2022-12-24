@@ -15,7 +15,7 @@
     
     <select id="queryAllConsult" resultType="Consult">
         select * from trade.consults
-        order by datetime
+        order by datetime desc
     </select>
     
     <select id="queryConsultById" resultType="Consult">
@@ -26,6 +26,7 @@
     <select id="queryConsultByUserId" resultType="Consult">
         select * from trade.consults
         where userid = #{userid}
+        order by datetime desc
     </select>
 
 </mapper>
