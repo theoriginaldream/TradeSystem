@@ -1,0 +1,143 @@
+.RPMfunction{
+  position: fixed;
+  height:  93%;
+  /* 100%的窗口高度 */
+  width: 93%;
+  min-width: 800px;
+  border: 1rem solid RGB(244,244,244);
+  background-color:var(--white-color);
+  padding: 1rem 1rem 1rem 1rem;
+  /* 背景板，展示级别为最低优先级 */
+  z-index: -10;
+}
+
+.m_head{
+  width: 100%;
+  min-width: 1140px;
+  width: 100%;
+  height: 6%;
+  padding: 0rem 0rem .5rem 0rem;
+  border-bottom: 1px solid RGB(233,233,233);
+}
+
+.m_name{
+  font-weight: bold;
+  padding: 0rem 0rem 0rem 3rem;
+  font-size: var(--normal-font-size)
+}
+
+.m_middle{
+  height:  93%;
+  width: 93%;
+  /* 100%的窗口高度 */
+  min-width: 1130px;
+  min-height: 520px;
+  padding:1rem 0rem 3rem 5rem ;
+}
+
+.about{
+  width: 700px;
+  height: 50px;
+  margin-left: 10px;
+  font-size: 15px;
+  position: fixed;
+  resize: none;  /*禁止textarea拖动改变输入框大小*/
+}
+.P_area{
+  margin-left: 10px;
+  margin-top: 2rem;
+}
+
+  /*图片设置*/
+.img{
+  position: relative;
+  height: 128px;
+  width: 128px;
+  line-height: 94px;
+}
+
+
+.pic_position{
+  height: 8%;
+  width: 50%;
+
+  
+}
+
+.p_name{
+  position:fixed;
+}
+
+
+/* .up_add_bg {
+  margin-left: 80px;
+  width: 121px;
+  height: 122px;
+
+} */
+.file{
+ width: 1200px;
+
+} 
+
+.purchase_pic{
+  position:absolute;
+  opacity: 0;
+  margin-left: 5rem;
+  width: 100px;
+  height: 50px;
+  background-color: brown;
+  z-index: 5;
+}
+.pic_area{
+  margin-top: 2rem;
+  margin-left: 4rem;
+  width: 1000px;
+  height: 150px;
+
+  
+}
+
+
+.m_butt{
+  width: 90%;
+  height: 5%;
+
+  padding:3rem 0rem 3rem 10rem ;
+}
+.butt:hover{
+  color: brown;
+}
+.butt{
+  position: absolute;
+  border:none;
+  background-color: #00b3ee;
+  height: 30px;
+  width: 90px;
+  margin-left: 43%;
+  border-radius: 5px;
+  color:aliceblue;
+  margin-top: -3rem;
+}
+
+.blueButton{ /*蓝色按钮,绝对定位*/
+  margin-top: 2rem;
+  display: block;
+  width: 100px;
+  height: 10px;
+  background-color: #00b3ee;
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+  margin-left: 6rem;
+  padding-bottom: 40px;
+  font:normal normal normal 16px/40px 'Microsoft YaHei';
+  cursor: pointer;
+  border-radius: 4px;
+  z-index: 2;
+}
+.blueButton:hover {
+  text-decoration: none;
+  
+}
+  

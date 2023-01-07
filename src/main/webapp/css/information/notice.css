@@ -1,0 +1,65 @@
+.m_list_specific_content{
+    list-style: none;
+    width: 500px;
+    text-align: left;
+    border-bottom:1px solid  rgb(223,223,223);
+    margin:5px auto;
+}
+.m_list_specific_content a{
+    float: right;
+    display: inline;
+    font-size: 5px;
+}
+.m_list{
+    width: 600px;
+    height: 100%;
+    margin: 5% auto;
+}
+.context_input{
+    margin: 5px;
+    width: 590px;
+    height: 75px;
+    font-size: 15px;
+    resize: none;  /*禁止textarea拖动改变输入框大小*/
+    border: none;
+    outline:none;
+}
+.send_content{
+    border:1px solid  #999999;
+}
+.show_content{
+    border:1px solid  #999999;
+    border-bottom: none;
+    width:600px;
+    height:300px;
+}
+.addressee{
+    font-size: 20px;
+    border:1px solid  #999999;
+    border-bottom: none;
+    padding: 10px;
+    width:600px;
+    height:10%;
+}
+.btn_part{
+    width: 600px;
+    padding-left: 72%;
+    margin-top: 5px;
+    padding-bottom: 5px;
+}
+.m_list_btn,.m_list_btn2{
+    display: inline;
+    margin-right: 5px;
+    font-size: 15px;
+    background-color: rgb(22,155,213);
+    text-align:center;
+    color: beige;
+    border-radius: 10px;
+    border:1px solid  rgb(223,223,223);
+    width:75px;
+    height:30px;
+}
+.m_list_time{
+    text-align: center;
+    margin:5px auto;
+}

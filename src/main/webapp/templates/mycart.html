@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>购物车</title>
+    <link rel="shortcut icon" type="image/x-icon"  href="../img/logo(1).png"><link>
+    <link rel="stylesheet" href="../css/my/mycart.css">
+    <link rel="stylesheet" href="../css/home_page/index.css">
+    <script>
+        function checkAll(){
+            //1.获取编号前面的复选框
+            var checkAllEle = document.getElementById("All");
+            console.log(checkAllEle)
+            //2.对编号前面复选框的状态进行判断
+            if(checkAllEle.checked==true){
+                //3.获取下面所有的复选框
+                var checkOnes = document.getElementsByName("checkOne");
+                //4.对获取的所有复选框进行遍历
+                for(var i=0;i<checkOnes.length;i++){
+                    //5.拿到每一个复选框，并将其状态置为选中
+                    checkOnes[i].checked=true;
+                    setTotal();
+                }
+            }else{
+                //6.获取下面所有的复选框
+                var checkOnes = document.getElementsByName("checkOne");
+                //7.对获取的所有复选框进行遍历
+                for(var i=0;i<checkOnes.length;i++){
+                    //8.拿到每一个复选框，并将其状态置为未选中
+                    checkOnes[i].checked=false;
+                    setTotal();
+                }
+            }
+        }
+        function check(){
+            // console.log("check");
+            //1.获取编号前面的复选框
+            var checkOnes = document.getElementsByName("checkOne");
+            setTotal();
+            //2.设置一个计数器
+            var a=0;
+            //3.获取全选框的状态
+            var checkAllEle = document.getElementById("All");
+                //4.获取下面所有的复选框
+            for(var i=0;i<checkOnes.length;i++){
+                //5.如果复选框的状态是未选中
+                if(checkOnes[i].checked==false){
+                    //6.设置全选框的状态为未选中
+                    checkAllEle.checked=false;
+                    //7.执行完毕关闭循环
+                    break;
+                }
+                //8.如果循环条件不成立，计数器加一
+                a++;
+            }
+            //9.判断计数器是否与复选框的的数量相等
+            if(a==checkOnes.length){
+                //10.如果相等则设置全选框的状态为已选中
+                checkAllEle.checked=true;
+            }
+        }
+        </script>
+</head>
+<!-- 侧边栏实现 -->
+<body id="body-pd">
+    <div class="l-navbar" id="navbar">
+        <nav class="nav">
+            <div>
+                <div class="nav_brand">
+                    <ion-icon name="list-circle-outline" class="nav_toggle" id="nav-toggle"></ion-icon>
+                    <a href="#" class="nav_logo">福新集市</a>
+                </div>
+                <div class="nav_list">
+                    <div class="nav_link collapse">
+                        <ion-icon name="storefront-outline" class="nav_icon"></ion-icon>
+                        
+                        <span class="nav_name">
+                            <a href="headpicture.html" target="_self" style="color:aliceblue">主页</a>
+                        </span>
+                        <ion-icon name="chevron-down-outline" class="collapse__link" ></ion-icon>
+                        <ul class="collapse_menu">
+                            <a href="headpicture.html" target="_self" style="color:aliceblue" class="collapse__sublink">出售商品</a>
+                            <a href="headpicture.html" target="_self" style="color:aliceblue" class="collapse__sublink">求购商品</a>
+                        </ul>
+                    </div>
+                    <div class="nav_link collapse">
+                        <ion-icon name="bag-add-outline" class="nav_icon" ></ion-icon>
+                        <span class="nav_name"><a href="rePurchaseMs.html" target="_self" style="color:aliceblue" class="collapse__sublink">求购商品</a></span>
+                        <ion-icon name="chevron-down-outline" class="collapse__link" ></ion-icon>
+                        <ul class="collapse_menu">
+                            <a href="rePurchaseMs.html " target="_self" style="color:aliceblue" class="collapse__sublink">发布求购信息</a>
+                        </ul>
+                    </div>
+                    <div class="nav_link collapse">
+                        <ion-icon name="bag-handle-outline" class="nav_icon" ></ion-icon>
+                        <span class="nav_name"><a href="reSellMs.html" target="_self" style="color:aliceblue" class="collapse__sublink">出售商品</a></span>
+                        <ion-icon name="chevron-down-outline" class="collapse__link" ></ion-icon>
+                        <ul class="collapse_menu">
+                            <a href="reSellMs.html" target="_self" style="color:aliceblue" class="collapse__sublink">发布出售信息</a>
+                        </ul>
+                    </div>
+                    <a href="mycart.html" target="_self" style="color:aliceblue" class="nav_link">
+                        <ion-icon name="cart-outline" class="nav_icon"></ion-icon>
+                        <span class="nav_name">购物车</span>
+                    </a>
+                    <div class="nav_link collapse">
+                        <ion-icon name="accessibility-outline" class="nav_icon" ></ion-icon>
+                        <span class="nav_name"><a href="myinfo.html" target="_self" style="color:aliceblue">我的</a></span>
+                        <ion-icon name="chevron-down-outline" class="collapse__link" ></ion-icon>
+                        <ul class="collapse_menu">
+                            <a href="myinfo.html" target="_self" style="color:aliceblue" class="collapse__sublink">个人信息</a>
+                            <a href="Request.html" target="_self" style="color:aliceblue" class="collapse__sublink">商品信息</a>
+                            <a href="orders.html" target="_self" style="color:aliceblue" class="collapse__sublink">商品订单</a>
+                            <a href="myinfo.html" target="_self" style="color:aliceblue" class="collapse__sublink">修改密码</a>
+                        </ul>
+                    </div>
+                    <a href="information.html" target="_self" style="color:aliceblue" class="nav_link">
+                        <ion-icon name="chatbubbles-outline" class="nav_icon" ></ion-icon>
+                        <span class="nav_name">通知</span>
+                    </a>
+                </div>
+            </div>
+            <div class="nav_list">
+                <a href="service.html" target="_self" style="color:aliceblue" class="nav_link">
+                    <ion-icon name="people-outline" class="nav_icon" ></ion-icon>
+                    <span class="nav_name">客服</span>
+                </a>
+                <a  class="nav_link" id="logout1">
+                    <ion-icon name="log-out-outline" class="nav_icon" ></ion-icon>
+                    <span class="nav_name">退出登陆</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+    <!-- 顶部部件 -->
+    <div  class="h-navbar" id = "body-head">
+        <div class="head_list" id="h_bar">
+            <!-- 在此处可增加顶部元素 -->
+            <a href="#" class="h_link">
+                <span class="h_name">购物车</span>
+            </a>
+            <a  class="login_link" id="logout2">
+                <!-- 登陆图标 -->
+                <ion-icon name="power-outline" class="nav_icon" style="margin-top: .5rem;" ></ion-icon>
+            </a>
+        </div>
+    </div>
+
+    <div class="m-function" id = "main_body">
+        <!--搜索栏-->
+        <div class="search-box">
+            <a class="product-content">商品内容</a>
+            <div class="function-box">
+                <input class="search-text" type="text"  id="inp" placeholder="在这里输入你想要搜的的东西"></input>
+                <input class="search-bnt" type="image" id="btn" src="../image/搜索.png" onclick="onSearch(2)"></input>
+            </div>
+            <!--批量移除-->
+            <div class="del-box">
+                <button class="del_check">- 批量移除</button>
+            </div>
+        </div>
+        <!--商品信息栏-->
+        <div class="product-box">
+            <table class="table1" id="table1">
+                <form action="" method="post">
+                    <thead>
+                    <tr>
+                        <th><input type="checkbox" id="All" onclick="checkAll()"/>全选</th>
+                        <th>商品图片</th>
+                        <th>商品内容</th>
+                        <th data-type="double">价格（元）</th>
+                        <th data-type="string">送货方式</th>
+                        <th class="time" data-type="data">添加时间
+                            <img src="../image/排序.png">
+                        </th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="lists">
+                    </tbody>
+            </form> 
+            </table>
+        </div>
+        <!--付款栏-->
+        <div class="payment-box">
+            <div class="payment">
+                <!-- 结算 -->
+                <span>已选商品<span class="red t-number"> 0 </span>件 总价:￥<span class="red t-price">0.00</span></span>
+                <!--立即购买-->
+                <button class="payment—bnt" onclick="setTotal()" id="myBtn">立即购买</button>
+                <!-- 弹窗 -->
+                <div id="myModal" class="modal">
+                    <!-- 弹窗内容 -->
+                    <div class="modal-content">
+                        <p>你已下单成功！</p> 
+                        <button class="close">确认</button>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="../js/my/mycart.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+
+    <script type="text/javascript">  
+        /**
+        * js 前台搜索
+        * @param searchContent 搜索的内容
+        * @col 要搜索的哪一列，这里是第一列，从0开始数起  
+        */
+       function onSearch(col){
+           setTimeout(function(){//因为是即时查询，需要用setTimeout进行延迟，让值写入到input内，再读取
+               var searchContent=document.getElementById('inp').value;
+               console.log(searchContent);
+               var storeId = document.getElementById('table1');//获取table的id标识  
+               var rowsLength = storeId.rows.length;//表格总共有多少行  
+               console.log(rowsLength);
+               var searchCol = col;//要搜索的哪一列，这里是第一列，从0开始数起  
+         
+               for(var i=1;i<rowsLength;i++){//按表的行数进行循环，本例第一行是标题，所以i=1，从第二行开始筛选（从0数起）  
+                   
+                   var searchText = storeId.rows[i].cells[searchCol].innerHTML;//取得table行，列的值  
+                   //alert(searchText);
+                   if(searchText.match(searchContent) || searchText.toUpperCase().match(searchContent.toUpperCase())){//用match函数进行筛选，如果input的值，即变量 key的值为空，返回的是ture，  
+                       storeId.rows[i].style.display='';//显示行操作，  
+                   }else{  
+                       storeId.rows[i].style.display='none';//隐藏行操作  
+                   }  
+               }  
+           },20);//20为延时时间  
+       }   
+   </script>  
+
+    <script>
+        // 表格排序，按时间
+        (function() {
+            var tbody = document.querySelector('#table1').tBodies[0];
+            var th = document.querySelector('#table1').tHead.rows[0].cells;
+            var td = tbody.rows;
+            for(var i = 0; i < th.length; i++) {
+                th[i].flag = 1;
+                th[i].onclick = function() {
+                    console.log(this.getAttribute('data-type'));
+                    sort(this.getAttribute('data-type'), this.flag, this.cellIndex);
+                    this.flag = -this.flag;
+                };
+            };
+
+            function sort(str, flag, n) {
+                var arr = [];//存放DOM
+                for(var i = 0; i < td.length; i++) {
+                    arr.push(td[i]);
+                };
+                //排序
+                arr.sort(function(a, b) {
+                    return method(str, a.cells[n].innerHTML, b.cells[n].innerHTML) * flag;
+                });
+                //添加
+                for(var i = 0; i < arr.length; i++) {
+                    tbody.appendChild(arr[i]);
+                };
+            };
+            
+            //排序方法
+            function method(str, a, b) {
+                switch(str) {
+                    case 'num': //数字排序
+                        return a - b;
+                        break;
+                    case 'double': //数字排序
+                        return a - b;
+                        break;
+                    case 'string': //字符串排序
+                        return a.localeCompare(b);
+                        break;
+                    default:  //日期排序，IE8下'2012-12-12'这种格式无法设置时间，替换成'/'
+                        a = a.split(">")[1].split("<")[0]
+                        b = b.split(">")[1].split("<")[0]
+                        // return new Date(a.split('-').join('/')).getTime() - new Date(b.split('-').join('/')).getTime();
+                        return (new Date(a).getTime() - new Date(b).getTime())
+                };
+            };
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+.m-function{
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+.re-box{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  line-height: 60px;
+  /* border-bottom: 1px solid gainsboro; */
+  /* 规定一下字体 */
+  --body-font:'Poppins',sans-serif;
+  --normal-font-size:1rem;
+  --smal-font-size:0.875rem;
+}
+.re-title{
+  font-weight: bold;
+  width: 100px;
+}
+/* 搜索栏 */
+.search-box{
+  display: flex;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  height: 30px;
+  /* align-items: center; */
+}
+.product-content{
+  height: 30px;
+  width: 100px;
+  text-align: center;
+  line-height: 30px;
+}
+.function-box{
+  display: flex;
+  height: 30px;
+  width: 300px;
+  float: left;
+  padding: 0 8px;
+  outline: none;
+  background-color: #f2f2f5;
+  border:none;
+  border-radius: 10px;
+}
+.search-text{
+  height: 30px;
+  width: 300px;
+  float: left;
+  padding: 0 8px;
+  outline: none;
+  background-color: #f2f2f5;
+  border:none;
+  border-radius: 10px;
+}
+.search-bnt{
+  float: left;
+  height: 30px;
+  padding: 0 8px;
+  outline: none;
+  background-color: #f2f2f5;
+  border:none;
+  border-radius: 10px;
+}
+
+.del-box{
+  position: absolute;
+  right: 30px;
+}
+button {
+  height: 30px;
+  width: 100px;
+  border: 0 none;
+  border-radius: 5px;
+  outline: none;
+  background-color: #12192c;
+  color: white;
+}
+.product-box{
+  margin-top: 48px;
+}
+/* 表格 */
+.table1{
+  table-layout:fixed;
+	margin: 10px auto;
+	padding: 0;
+	width: 100%;
+	border: 1px solid #c3dcf5;
+	border-collapse: collapse;
+	line-height: 250%;
+  text-align: center;
+}
+.table1 th{
+	border: 1px solid #c3dcf5;
+}
+.time{
+  display: flex;
+  justify-content: center;
+}
+.time img{
+  height: 30px auto;
+  width: 30px;
+}
+.table1 tr td{
+	border: 1px solid #c3dcf5;
+  line-height: 10%;
+  overflow: hidden;
+	white-space: nowrap;
+}
+.table1 tr td:hover{
+  overflow: auto;
+}
+
+
+.table1 tr:nth-of-type(odd){
+	background: #ebf5ff;
+}
+
+.table1 tr:nth-of-type(even){
+	background: #f7fbff;
+}
+.imgclass{
+  height: 50px;
+  width: 50px;
+}
+.subtotal{
+	color: orangered;
+	font-weight: bold;
+}
+
+/* 修改弹窗 (background) */
+.modal {
+  display: none; /* 默认隐藏 */
+  position: fixed; /*固定定位*/
+  z-index: 1; /* 设置在顶层 */
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%;
+  overflow: auto; 
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4); 
+  text-align: center;
+  line-height: 85px;
+}
+
+/* 弹窗内容 */
+.modal-content {
+  position: fixed;/*固定定位*/
+  background-color: #fefefe;
+  margin-top: 12% ;
+  margin-left: 13% ;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  height: 60%;
+  font-size: larger;
+  border-radius: 30px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+  overflow-y:auto;
+}
+.modal-content p{
+  height: 10%;
+}
+.modal-content label{
+  margin-left: 10%;
+  width: 10%;
+}
+.modal-content textarea{
+  width: 33% auto;
+  font-size: medium;
+  font-family: 'Poppins',sans-serif;
+  color: black;
+  /* margin-bottom: 10px; */
+  border: 2px solid gainsboro;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+/* 确定按钮 */
+.sure {
+  color: white;
+  float: none;
+  font-size: 20px;
+  width: 15%;
+  background-color: #0c5df4;
+  margin-left: 13%;
+  margin-right: 10%;
+}
+
+.sure:hover,
+.sure:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
