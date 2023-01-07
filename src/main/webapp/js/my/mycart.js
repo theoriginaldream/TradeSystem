@@ -125,7 +125,7 @@ window.onclick = function(event) {
 // 获取表单数据
 window.onload = function () {
   $.ajax({
-      url: "http://101.133.239.170:8080/items/myShoppingCart",
+      url: "http://localhost:8080/items/myShoppingCart",
       type: 'get',
       dataType: 'json',
       // data: {name:"你好"},
@@ -238,7 +238,7 @@ function addlist(CART_ID,ITEM_ID,IMG,CONTENT,PRICE,WAY,TIME){
   // 删除购物车商品
 function del_shoppingcart(shoppingcartid){
     $.ajax({
-      url: "http://101.133.239.170:8080/items/delete/shoppingCart/" + shoppingcartid,
+      url: "http://localhost:8080/items/delete/shoppingCart/" + shoppingcartid,
       //post接口测试用例
       // url:"https://jsonplaceholder.typicode.com/posts",
       // data:{
@@ -270,7 +270,7 @@ function buy(itemid){
       //   "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
       //   "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
       // },
-      url: "http://101.133.239.170:8080/order/add/order/" + itemid,
+      url: "http://localhost:8080/order/add/order/" + itemid,
       type: "post",
       // data: itemid,
       // contentType:'multipart/form-data',
@@ -288,7 +288,7 @@ function buy(itemid){
 var logoutbtn1 = document.getElementById("logout1")
 logoutbtn1.onclick = function (){
     $.ajax({
-        'url':'http://101.133.239.170:8080/login/logout',
+        'url':'http://localhost:8080/login/logout',
         'type':'post',
         success:function () {
             console.log("请求成功")

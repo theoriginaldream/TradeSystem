@@ -23,7 +23,7 @@ window.onload = function(){
         }
         else{
             $.ajax({
-                'url':'http://101.133.239.170:8080/login/register',
+                'url':'http://localhost:8080/login/register',
                 'type':'post',
                 contentType:'application/json',
                 'dataType':'text',
@@ -31,7 +31,7 @@ window.onload = function(){
                 success:function (data) {
                     if(data == 'success'){
                         alert("注册成功");
-                        window.location.href = "http://101.133.239.170:8080/templates/userLogin.html";
+                        window.location.href = "http://localhost:8080/templates/userLogin.html";
                     }
                     else
                         alert("注册失败")

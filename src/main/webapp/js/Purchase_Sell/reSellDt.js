@@ -35,7 +35,7 @@ sendbtn.onclick=function(){
     // 点击发送按钮后向后端发送留言内容，留言时间
     
     $.ajax({
-        'url':"http://101.133.239.170:8080/items/add/comment",
+        'url':"http://localhost:8080/items/add/comment",
         'type':'POST',
         "data":{
           "itemid":itemid,
@@ -44,7 +44,7 @@ sendbtn.onclick=function(){
         'dataType':'json',
         success:function () {
           // alert("success");
-          window.location.href = "http://101.133.239.170:8080/templates/reSellDt.html?itemid=" + itemid
+          window.location.href = "http://localhost:8080/templates/reSellDt.html?itemid=" + itemid
         },
         error:function () {
           console.log("请求失败")
@@ -77,7 +77,7 @@ window.onload = function(){
     }
     
     $.ajax({
-        'url':"http://101.133.239.170:8080/items/item/" + itemid,
+        'url':"http://localhost:8080/items/item/" + itemid,
         'type':'GET',
         // 'dataType':'json',
         success:function (res) {
@@ -223,7 +223,7 @@ cartbtn.onclick = function(){
   var itemid = getQueryString("itemid");
   // 向后台发送要加入购物车的商品id
   $.ajax({
-    'url':"http://101.133.239.170:8080/items/add/shoppingCart/" + itemid,
+    'url':"http://localhost:8080/items/add/shoppingCart/" + itemid,
     'type':'POST',
     // "data":{
     //   "itemid":itemid
@@ -245,7 +245,7 @@ salebtn.onclick = function(){
   var itemid = getQueryString("itemid");
   // 向后台发送要加入购物车的商品id
   $.ajax({
-    'url':"http://101.133.239.170:8080/order/add/order/" + itemid,
+    'url':"http://localhost:8080/order/add/order/" + itemid,
     'type':'POST',
     // "data":{
     //   "itemid":itemid
@@ -267,11 +267,11 @@ salebtn.onclick = function(){
 var logoutbtn1 = document.getElementById("logout1")
 logoutbtn1.onclick = function (){
     $.ajax({
-        'url':'http://101.133.239.170:8080/login/logout',
+        'url':'http://localhost:8080/login/logout',
         'type':'post',
         success:function () {
             console.log("请求成功")
-            window.location.href = "http://101.133.239.170:8080/templates/userLogin.html"
+            window.location.href = "http://localhost:8080/templates/userLogin.html"
         },
         error:function (XMLHttpRequest, textStatus, errorThrown) {
             console.log("请求失败")
@@ -285,11 +285,11 @@ logoutbtn1.onclick = function (){
 var logoutbtn2 = document.getElementById("logout2")
 logoutbtn2.onclick = function (){
     $.ajax({
-        'url':'http://101.133.239.170:8080/login/logout',
+        'url':'http://localhost:8080/login/logout',
         'type':'post',
         success:function () {
             console.log("请求成功")
-            window.location.href = "http://101.133.239.170:8080/templates/userLogin.html"
+            window.location.href = "http://localhost:8080/templates/userLogin.html"
         },
         error:function (XMLHttpRequest, textStatus, errorThrown) {
             console.log("请求失败")

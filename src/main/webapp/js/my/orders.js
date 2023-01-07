@@ -52,7 +52,7 @@ var del_check = document.querySelector(".del_check");
 // 获取表单数据
 window.onload = function () {
   $.ajax({
-      url: "http://101.133.239.170:8080/order/mine",
+      url: "http://localhost:8080/order/mine",
       type: 'get',
       dataType: 'json',
       // data: {name:"你好"},
@@ -196,7 +196,7 @@ function addlist(ID,IMG,CONTENT,PRICE,WAY,STATE,TIME){
 // 删除订单
 function del_order(order_id){
   $.ajax({
-    url: "http://101.133.239.170:8080/order/delete/" + order_id,
+    url: "http://localhost:8080/order/delete/" + order_id,
     type: "post",
     // data: order_id,
     // contentType:'multipart/form-data',
@@ -222,7 +222,7 @@ function del_order(order_id){
 // 确认收货
 function received(order_id){
   $.ajax({
-    url: "http://101.133.239.170:8080/order/update/status/"+order_id,
+    url: "http://localhost:8080/order/update/status/"+order_id,
     type: "post",
     // data: order_id,
     // contentType:'multipart/form-data',
@@ -250,11 +250,11 @@ function received(order_id){
 var logoutbtn1 = document.getElementById("logout1")
 logoutbtn1.onclick = function (){
     $.ajax({
-        'url':'http://101.133.239.170:8080/login/logout',
+        'url':'http://localhost:8080/login/logout',
         'type':'post',
         success:function () {
             console.log("请求成功")
-            window.location.href = "http://101.133.239.170:8080/templates/userLogin.html"
+            window.location.href = "http://localhost:8080/templates/userLogin.html"
         },
         error:function (XMLHttpRequest, textStatus, errorThrown) {
             console.log("请求失败")
@@ -268,11 +268,11 @@ logoutbtn1.onclick = function (){
 var logoutbtn2 = document.getElementById("logout2")
 logoutbtn2.onclick = function (){
     $.ajax({
-        'url':'http://101.133.239.170:8080/login/logout',
+        'url':'http://localhost:8080/login/logout',
         'type':'post',
         success:function () {
             console.log("请求成功")
-            window.location.href = "http://101.133.239.170:8080/templates/userLogin.html"
+            window.location.href = "http://localhost:8080/templates/userLogin.html"
         },
         error:function (XMLHttpRequest, textStatus, errorThrown) {
             console.log("请求失败")

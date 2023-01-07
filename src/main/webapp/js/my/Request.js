@@ -52,7 +52,7 @@ var del_check = document.querySelector(".del_check");
 // 获取表单数据
 window.onload = function () {
     $.ajax({
-        url: "http://101.133.239.170:8080/requires/mine",
+        url: "http://localhost:8080/requires/mine",
         type: 'get',
         dataType: 'json',
         // data: {name:"你好"},
@@ -256,7 +256,7 @@ function addlist(ID,IMG,CONTENT,TIME){
 // 删除求购信息
 function del_rite(rite_id){
     $.ajax({
-        url: "http://101.133.239.170:8080/requires/delete/" + rite_id,
+        url: "http://localhost:8080/requires/delete/" + rite_id,
         type: "post",
         // data: rite_id,
         // contentType:'multipart/form-data',
@@ -326,7 +326,7 @@ function edit_item(){
     
     
     $.ajax({
-        url: "http://101.133.239.170:8080/requires/update/require",
+        url: "http://localhost:8080/requires/update/require",
         type: "post",
         data: formData,
         // contentType:'multipart/form-data',
@@ -358,7 +358,7 @@ function edit_item(){
 var logoutbtn1 = document.getElementById("logout1")
 logoutbtn1.onclick = function (){
     $.ajax({
-        'url':'http://101.133.239.170:8080/login/logout',
+        'url':'http://localhost:8080/login/logout',
         'type':'post',
         success:function () {
             console.log("请求成功")

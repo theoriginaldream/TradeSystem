@@ -38,7 +38,7 @@ function f2() {
   console.log("f2");
   // 获取个人信息
   $.ajax({
-      url: "http://101.133.239.170:8080/user/user",
+      url: "http://localhost:8080/user/user",
       type: 'get',
       dataType: 'json',
       // data: {name:"你好"},
@@ -128,7 +128,7 @@ function changeInfo(){
   console.log(Campus.options[index].value)
   console.log(Desc.value)
   $.ajax({
-      url: "http://101.133.239.170:8080/user/update/user",
+      url: "http://localhost:8080/user/update/user",
       type: "post",
       data: formData,
       // contentType:'multipart/form-data',
@@ -184,7 +184,7 @@ function validate() {
 function f3(pw,pw1,pw2){
   console.log("f3");
   $.ajax({
-    url:'http://101.133.239.170:8080/user/update/pwd',
+    url:'http://localhost:8080/user/update/pwd',
     type:'post',
     dataType:'text',
     contentType:'application/x-www-form-urlencoded',
@@ -210,11 +210,11 @@ function f3(pw,pw1,pw2){
 var logoutbtn1 = document.getElementById("logout1")
 logoutbtn1.onclick = function (){
     $.ajax({
-        'url':'http://101.133.239.170:8080/login/logout',
+        'url':'http://localhost:8080/login/logout',
         'type':'post',
         success:function () {
             console.log("请求成功")
-            window.location.href = "http://101.133.239.170:8080/templates/userLogin.html"
+            window.location.href = "http://localhost:8080/templates/userLogin.html"
         },
         error:function (XMLHttpRequest, textStatus, errorThrown) {
             console.log("请求失败")
@@ -228,11 +228,11 @@ logoutbtn1.onclick = function (){
 var logoutbtn2 = document.getElementById("logout2")
 logoutbtn2.onclick = function (){
     $.ajax({
-        'url':'http://101.133.239.170:8080/login/logout',
+        'url':'http://localhost:8080/login/logout',
         'type':'post',
         success:function () {
             console.log("请求成功")
-            window.location.href = "http://101.133.239.170:8080/templates/userLogin.html"
+            window.location.href = "http://localhost:8080/templates/userLogin.html"
         },
         error:function (XMLHttpRequest, textStatus, errorThrown) {
             console.log("请求失败")

@@ -8,7 +8,7 @@ btn.onclick = function(){
     }else{
         var text = document.getElementById("textarea1").value;
         $.ajax({
-            'url':'http://101.133.239.170:8080/consult/add',
+            'url':'http://localhost:8080/consult/add',
             'Content-Type':'multipart/form-data',
             'type':'post',
             'dataType':'text',
@@ -36,14 +36,14 @@ btn.onclick = function(){
     //         ul.removeChild(this.parentNode);
     //         //从后端获取删除数据的consultid
     //         $.ajax({
-    //             'url':'http://101.133.239.170:8080/consult/my',
+    //             'url':'http://localhost:8080/consult/my',
     //             'type':'GET',
     //             'dataType':'json',
     //             'success':function (res) {
     //                 console.log(res[i].consultid)
     //                 var consultid=res[i].consultid
     //                 $.ajax({
-    //                     'url':'http://101.133.239.170:8080/consult/delete/' + consultid,
+    //                     'url':'http://localhost:8080/consult/delete/' + consultid,
     //                     'Content-Type':'application/x-www-form-urlencoded',
     //                     'type':'POST',
     //                     // 'dataType':'text',
@@ -78,11 +78,11 @@ function formatDate(){
 var logoutbtn1 = document.getElementById("logout1")
 logoutbtn1.onclick = function (){
     $.ajax({
-        'url':'http://101.133.239.170:8080/login/logout',
+        'url':'http://localhost:8080/login/logout',
         'type':'post',
         success:function () {
             console.log("请求成功")
-            window.location.href = "http://101.133.239.170:8080/templates/userLogin.html"
+            window.location.href = "http://localhost:8080/templates/userLogin.html"
         },
         error:function (XMLHttpRequest, textStatus, errorThrown) {
             console.log("请求失败")
@@ -96,11 +96,11 @@ logoutbtn1.onclick = function (){
 var logoutbtn2 = document.getElementById("logout2")
 logoutbtn2.onclick = function (){
     $.ajax({
-        'url':'http://101.133.239.170:8080/login/logout',
+        'url':'http://localhost:8080/login/logout',
         'type':'post',
         success:function () {
             console.log("请求成功")
-            window.location.href = "http://101.133.239.170:8080/templates/userLogin.html"
+            window.location.href = "http://localhost:8080/templates/userLogin.html"
         },
         error:function (XMLHttpRequest, textStatus, errorThrown) {
             console.log("请求失败")

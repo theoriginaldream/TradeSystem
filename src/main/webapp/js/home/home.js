@@ -94,7 +94,7 @@ $('#area_select').on('change',function(){
 window.onload = function(){
   // 获取所有的求购商品
   $.ajax({
-    'url':"http://101.133.239.170:8080/requires/requires",
+    'url':"http://localhost:8080/requires/requires",
     'type':'GET',
     // 'dataType':'json',
     'success':function (res) {
@@ -111,7 +111,7 @@ window.onload = function(){
   })
   // 获取所有的出售商品
   $.ajax({
-    'url':"http://101.133.239.170:8080/items/items",
+    'url':"http://localhost:8080/items/items",
     'type':'GET',
     // 'dataType':'json',
     'success':function (res) {
@@ -199,11 +199,11 @@ function addImg(obj,src){
 var logoutbtn1 = document.getElementById("logout1")
 logoutbtn1.onclick = function (){
   $.ajax({
-    'url':'http://101.133.239.170:8080/login/logout',
+    'url':'http://localhost:8080/login/logout',
     'type':'post',
     success:function () {
       console.log("请求成功")
-      window.location.href = "http://101.133.239.170:8080/templates/userLogin.html"
+      window.location.href = "http://localhost:8080/templates/userLogin.html"
     },
     error:function (XMLHttpRequest, textStatus, errorThrown) {
       console.log("请求失败")
@@ -217,11 +217,11 @@ logoutbtn1.onclick = function (){
 var logoutbtn2 = document.getElementById("logout2")
 logoutbtn2.onclick = function (){
   $.ajax({
-    'url':'http://101.133.239.170:8080/login/logout',
+    'url':'http://localhost:8080/login/logout',
     'type':'post',
     success:function () {
       console.log("请求成功")
-      window.location.href = "http://101.133.239.170:8080/templates/userLogin.html"
+      window.location.href = "http://localhost:8080/templates/userLogin.html"
     },
     error:function (XMLHttpRequest, textStatus, errorThrown) {
       console.log("请求失败")

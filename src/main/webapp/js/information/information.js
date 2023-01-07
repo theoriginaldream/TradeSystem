@@ -7,7 +7,7 @@ window.onload = function(){
     var ul2 = document.querySelector(".m_list_inf2");//往系统消息里添加内容
 
     $.ajax({
-      'url':"http://101.133.239.170:8080/user/item/message",
+      'url':"http://localhost:8080/user/item/message",
       'type':'GET',
       'dataType':'json',
       'success':function (res) {
@@ -31,7 +31,7 @@ window.onload = function(){
         }
     })
     $.ajax({
-        'url':"http://101.133.239.170:8080/consult/mine",
+        'url':"http://localhost:8080/consult/mine",
         'type':'GET',
         'dataType':'json',
         'success':function (res) {
@@ -94,11 +94,11 @@ function addSysteminfo(str1,str2,ul){
 var logoutbtn1 = document.getElementById("logout1")
 logoutbtn1.onclick = function (){
     $.ajax({
-        'url':'http://101.133.239.170:8080/login/logout',
+        'url':'http://localhost:8080/login/logout',
         'type':'post',
         success:function () {
             console.log("请求成功")
-            window.location.href = "http://101.133.239.170:8080/templates/userLogin.html"
+            window.location.href = "http://localhost:8080/templates/userLogin.html"
         },
         error:function (XMLHttpRequest, textStatus, errorThrown) {
             console.log("请求失败")
@@ -112,11 +112,11 @@ logoutbtn1.onclick = function (){
 var logoutbtn2 = document.getElementById("logout2")
 logoutbtn2.onclick = function (){
     $.ajax({
-        'url':'http://101.133.239.170:8080/login/logout',
+        'url':'http://localhost:8080/login/logout',
         'type':'post',
         success:function () {
             console.log("请求成功")
-            window.location.href = "http://101.133.239.170:8080/templates/userLogin.html"
+            window.location.href = "http://localhost:8080/templates/userLogin.html"
         },
         error:function (XMLHttpRequest, textStatus, errorThrown) {
             console.log("请求失败")

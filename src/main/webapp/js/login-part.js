@@ -14,7 +14,7 @@ window.onload = function(){
         }
         else{
             $.ajax({
-                'url':'http://101.133.239.170:8080/login/userLogin',
+                'url':'http://localhost:8080/login/userLogin',
                 'type':'post',
                 'Content-Type':'application/x-www-form-urlencoded',
                 'dataType':'text',
@@ -28,11 +28,11 @@ window.onload = function(){
                         // console.log(userid);
                         if(userid == "00001"){
                             // window.open("../../templates/inform.html")
-                            window.location.href = "http://101.133.239.170:8080/templates/inform.html"
+                            window.location.href = "http://localhost:8080/templates/inform.html"
                             }
                         else{
                             // window.open("../../templates/headpicture.html")
-                            window.location.href = "http://101.133.239.170:8080/templates/headpicture.html"
+                            window.location.href = "http://localhost:8080/templates/headpicture.html"
                             }
                     }
                 },
