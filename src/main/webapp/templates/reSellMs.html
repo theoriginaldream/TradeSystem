@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>发布出售信息</title>
+    <link rel="shortcut icon" type="image/x-icon"  href="../img/logo(1).png"><link>
+    <link rel="stylesheet" href="../css/home_page/index.css">
+    <link rel ="stylesheet" href = "../css/Purchase_Sell/reSellMs.css">
+</head>
+<!-- 侧边栏实现 -->
+<body id="body-pd">
+    <div class="l-navbar" id="navbar">
+        <nav class="nav">
+            <div>
+                <div class="nav_brand">
+                    <ion-icon name="list-circle-outline" class="nav_toggle" id="nav-toggle"></ion-icon>
+                    <a href="#" class="nav_logo">福新集市</a>
+                </div>
+                <div class="nav_list">
+                    <div class="nav_link collapse">
+                        <ion-icon name="storefront-outline" class="nav_icon"></ion-icon>
+                        
+                        <span class="nav_name">
+                            <a href="headpicture.html" target="_self" style="color:aliceblue">主页</a>
+                        </span>
+                        <ion-icon name="chevron-down-outline" class="collapse__link" ></ion-icon>
+                        <ul class="collapse_menu">
+                            <a href="headpicture.html" target="_self" style="color:aliceblue" class="collapse__sublink">出售商品</a>
+                            <a href="headpicture.html" target="_self" style="color:aliceblue" class="collapse__sublink">求购商品</a>
+                        </ul>
+                    </div>
+                    <div class="nav_link collapse">
+                        <ion-icon name="bag-add-outline" class="nav_icon" ></ion-icon>
+                        <span class="nav_name"><a href="rePurchaseMs.html" target="_self" style="color:aliceblue" class="collapse__sublink">求购商品</a></span>
+                        <ion-icon name="chevron-down-outline" class="collapse__link" ></ion-icon>
+                        <ul class="collapse_menu">
+                            <a href="rePurchaseMs.html " target="_self" style="color:aliceblue" class="collapse__sublink">发布求购信息</a>
+                        </ul>
+                    </div>
+                    <div class="nav_link collapse">
+                        <ion-icon name="bag-handle-outline" class="nav_icon" ></ion-icon>
+                        <span class="nav_name"><a href="reSellMs.html" target="_self" style="color:aliceblue" class="collapse__sublink">出售商品</a></span>
+                        <ion-icon name="chevron-down-outline" class="collapse__link" ></ion-icon>
+                        <ul class="collapse_menu">
+                            <a href="reSellMs.html" target="_self" style="color:aliceblue" class="collapse__sublink">发布出售信息</a>
+                        </ul>
+                    </div>
+                    <a href="mycart.html" target="_self" style="color:aliceblue" class="nav_link">
+                        <ion-icon name="cart-outline" class="nav_icon"></ion-icon>
+                        <span class="nav_name">购物车</span>
+                    </a>
+                    <div class="nav_link collapse">
+                        <ion-icon name="accessibility-outline" class="nav_icon" ></ion-icon>
+                        <span class="nav_name"><a href="myinfo.html" target="_self" style="color:aliceblue">我的</a></span>
+                        <ion-icon name="chevron-down-outline" class="collapse__link" ></ion-icon>
+                        <ul class="collapse_menu">
+                            <a href="myinfo.html" target="_self" style="color:aliceblue" class="collapse__sublink">个人信息</a>
+                            <a href="Request.html" target="_self" style="color:aliceblue" class="collapse__sublink">商品信息</a>
+                            <a href="orders.html" target="_self" style="color:aliceblue" class="collapse__sublink">商品订单</a>
+                            <a href="myinfo.html" target="_self" style="color:aliceblue" class="collapse__sublink">修改密码</a>
+                        </ul>
+                    </div>
+                    <a href="information.html" target="_self" style="color:aliceblue" class="nav_link">
+                        <ion-icon name="chatbubbles-outline" class="nav_icon" ></ion-icon>
+                        <span class="nav_name">通知</span>
+                    </a>
+                </div>
+            </div>
+            <div class="nav_list">
+                <a href="service.html" target="_self" style="color:aliceblue" class="nav_link">
+                    <ion-icon name="people-outline" class="nav_icon" ></ion-icon>
+                    <span class="nav_name">客服</span>
+                </a>
+                <a  class="nav_link" id="logout1">
+                    <ion-icon name="log-out-outline" class="nav_icon" ></ion-icon>
+                    <span class="nav_name">退出登陆</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+    <!-- 顶部部件 -->
+    <div  class="h-navbar" id = "body-head">
+        <div class="head_list" id="h_bar">
+            <!-- 在此处可增加顶部元素 -->
+            <a href="#" class="h_link">
+                <span class="h_name">出售商品/发布出售信息</span>
+            </a>
+            <a class="login_link" id="logout2">
+                <!-- 登陆图标 -->
+                <ion-icon name="power-outline" class="nav_icon" style="margin-top: .5rem;" ></ion-icon>
+            </a>
+        </div>
+    </div>
+
+    <div class ="RPMfunction" id ="RPMbody">
+            <!--中部导航栏-->
+            <div href="#" class="m_head" id = "m_head_collapse" >
+                <span class="m_name "  id="h1">发布出售信息</span>
+            </div>
+            <div href ="#" class = "m_middle ">
+                <!--action表单数据提交网址-->
+                <form enctype="multipart/form-data" >
+                    <p>
+                        <label>商品内容：</label>
+                        <textarea class="about" id="S_detail" cols="44" rows="4" ></textarea>
+                    </p>
+                    <p>
+                        <label>商品价格：</label>
+                        <input type="text" id="price" style="height: 30px;width: 300px;"/>
+                    </p>
+                    <p>
+                        <label>所属校区：</label>
+                        <input type="text" id="area" style="height: 30px;width: 300px;"/>
+                    </p>
+                    <p>
+                        <label>送货方式：</label>
+                        <input type="text" id="way" style="height: 30px;width: 300px;"/>
+                    </p>
+                    <div class="pic_position">
+                        <!-- <span class="p_name">商品图片：</span>
+                        <div class="file"  id="pic_show" >
+                            <label for='my_file' class='up_add_bg'>
+                                <img class="img" src='../../image/增加图片例图.png' width="140px">
+                            </label>
+    
+                        </div> -->
+                        <span class="p_name" >商品图片：</span>
+                        <div class="file"  id="pic_show" >
+                            <!-- <label for='my_file' class='up_add_bg'>
+                                <img class="img" src='../../image/增加图片例图.png' width="140px">
+                            </label> -->
+
+                            <input type="file" class="purchase_pic" name="P_pic" id ="pic_id" multiple="multiple"  accept="image/*"onchange="setImagePreviews()"  />
+                            <!--<input type="file" class="purchase_pic" name="P_pic" id ="pic_id" multiple="multiple"  accept="image/*"onchange="setImagePreviews()"  />-->
+                            <a  class="blueButton">选择文件</a>
+                        </div>
+                        <div class="pic_area" id="pic_area">
+
+                        </div>
+                    </div>
+                    <div  class = "m_butt">
+                        <p>
+                            <button id="button1" type="button" class="butt" >确认</button>
+                        </p >
+                    </div>
+                    
+                </form>
+            </div>     
+    </div>
+   
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="../js/Purchase_Sell/reSellMS.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="../js/home/index.js"></script>
+</body>
+</html>

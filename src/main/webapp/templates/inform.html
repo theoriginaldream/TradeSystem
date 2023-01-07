@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>福新市场</title>
+    <link rel="shortcut icon" type="image/x-icon"  href="../img/logo(1).png"></link>
+    <link rel="stylesheet" href="../css/Custom_Service/inform.css">
+    <link rel="stylesheet" href="../css/home_page/index.css">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<!-- 侧边栏实现 -->
+<body id="body-pd">
+    <div class="l-navbar" id="navbar">
+        <nav class="nav">
+            <div>
+                <div class="nav_brand">
+                    <ion-icon name="list-circle-outline" class="nav_toggle" id="nav-toggle"></ion-icon>
+                    <a href="#" class="nav_logo">福新集市</a>
+                </div>
+                <div>
+                    <a href="inform.html" target="_self" style="color:aliceblue" class="nav_link">
+                        <ion-icon name="chatbubbles-outline" class="nav_icon" ></ion-icon>
+                        <span class="nav_name">通知</span>
+                    </a>
+                </div>
+            </div>
+            <div class="nav_list">
+                <a  class="nav_link" id="logout1">
+                    <ion-icon name="log-out-outline" class="nav_icon" ></ion-icon>
+                    <span class="nav_name">退出登陆</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+    <!-- 顶部部件 -->
+    <div  class="h-navbar" id = "body-head">
+        <div class="head_list" id="h_bar">
+            <!-- 在此处可增加顶部元素 -->
+            <a href="#" class="h_link">
+                <span class="h_name">消息</span>
+            </a>
+            <a class="login_link" id="logout2">
+                <!-- 登陆图标 -->
+                <ion-icon name="power-outline" class="nav_icon" style="margin-top: .5rem;" ></ion-icon>
+            </a>
+        </div>
+    </div>
+    <div class="m-function" id = "main_body">
+        <div class="m_list"  id ="m_content">
+            <ul class="m_list_index">
+                <li class="on">消息通知</li>
+            </ul>
+            <div id="m_list_information" class="show">
+                <ul class="m_list_inf1">
+                    <!-- <li class="inf_list">
+                        <button onclick="openwindow('0002')">客户咨询了一条消息，请回复!</button>
+                        <span>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span>
+                        <span>2022-11-13 14:14</span>
+                    </li> -->
+                </ul>
+            </div>
+            <div class="send">
+                <button id=send_btn onclick="openwindow('00001')">发送全员消息</button>
+            </div>
+            <!-- 弹窗隐藏区域 -->
+            <div id="myModal" class="modal">
+                <!-- 弹窗内容 -->
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="close">&times;</span>
+                        <h2>回复</h2>
+                    </div>
+                    <div class="modal-body">
+                        <p>回复内容:</p>
+                        <textarea id="reply" placeholder="请在此处输入回复内容"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                    <button class="ok">确定</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="no">取消</button>
+                    </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    
+    
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="../js/Custom_Service/inform.js"></script>
+    <script src="../js/home/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+.m_list{
+    width:100%;
+    height:100%;
+}
+.m_list_index{
+    font-size: 25px;
+    list-style:none;
+    height:10%;
+}
+.m_list_index li{
+    background:#FFF;
+    /* 移动到这个部分鼠标的形式会变成小手 */
+    cursor:pointer;
+    float:left;
+    list-style:none;
+    height:29px; 
+    line-height:29px;
+    padding:0px 10px; 
+    margin:0px 10px; 
+}
+.m_list_index li.on{
+    font-weight: bold;
+}
+#m_content div{
+    margin:0px 10px;
+    margin-top: 5px;
+    height:85%;
+    width:95%; 
+    line-height:24px;
+    border-top:none;  
+    border:1px solid rgb(121,121,121);
+}
+.hide{
+    display:none;
+}
+.inf_list{
+    padding: 10px;
+    height:80px;
+    width:100%;
+    border-bottom:1px solid rgb(121,121,121);
+}
+.inf_list span{
+    display: block;
+    /* 超过的部分隐藏 */
+    overflow:hidden;
+}
+.inf_list a{
+    text-decoration: none;
+    color: black;
+}
+.inf_list a:hover {
+    font-weight: bold;
+}
+#m_list_information{
+    overflow: auto;
+}
+.inf_list1{
+    font-size: 20px;
+}

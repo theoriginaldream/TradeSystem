@@ -1,0 +1,228 @@
+
+/*===== 谷歌字体 =====*/
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+/* 侧边框设置 */
+:root{
+    --nav-width:92px;
+
+    /* 自定义颜色 */
+    --first-color:#0c5df4;
+    --bg-color:#12192c;
+    --sub-color:#b6cefc;
+    --white-color:#fff;
+
+    /* 规定一下字体 */
+    --body-font:'Poppins',sans-serif;
+    --normal-font-size:1rem;
+    --smal-font-size:0.875rem;
+
+    /* 设置一下z-index级别 */
+    --z-fixed: 100;
+}
+
+*,::before,::after{
+    box-sizing: border-box;
+}
+body{
+  position: relative;
+  margin: 0;
+  /* 上 右 下 左 */
+  padding: .01rem 0rem 0rem 5.75rem;
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+  transition: .5s;
+}
+h1{
+  margin: 0;
+}
+ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+a{
+  text-decoration: none;
+}
+.l-navbar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--nav-width);
+  /* 100%的窗口高度 */
+  height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--white-color);
+  padding: 1.5rem 1.5rem 2rem;
+  transition: 0.5s;
+  z-index: var(--z-fixed);
+}
+
+.nav{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* 溢出隐藏,页面展示配件超出页面后可滑动，并隐藏滑动条 */
+  overflow-x: hidden;
+  overflow-y: scroll;
+  text-align: center;
+}
+.nav::-webkit-scrollbar {
+  display: none;
+}
+.nav_brand{
+  display: grid;
+  grid-template-columns: max-content max-content;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.nav_toggle{
+  font-size: 1.5rem;
+  padding: 0.75rem;
+  /* 鼠标放上变小手 */
+  cursor: pointer;
+}
+
+.nav_logo{
+  color: var(--white-color);
+  font-weight: 600;
+}
+
+.nav_link{
+  display: grid;
+  grid-template-columns: max-content max-content;
+  align-items: center;
+  column-gap: 0.75rem;
+  padding: 0.75rem;
+  color: var(--white-color);
+  border-radius: .5rem;
+  margin-bottom: 1rem;
+  transition: .3s;
+  cursor: pointer;
+}
+
+.nav_link :hover{
+  background-color: var(--first-color);
+}
+
+.nav_icon{
+  font-size: 1.25rem;
+}
+
+.nav_name{
+  font-size: var(--smal-font-size);
+}
+
+.expander{
+  width: calc(var(--nav-width) + 9.25rem);
+}
+
+.body-pd{
+  padding: 2rem 0 0 16rem;
+}
+
+.active{
+  background-color: var(--first-color);
+}
+
+.collapse{
+  /* grid-template-columns: 20px max-content 1rf; */
+  grid-template-columns: 20px max-content 1fr;
+
+}
+
+
+.collapse__link{
+  justify-self: flex-end;
+  transition: .5s;
+}
+
+.collapse_menu{
+  display: none;
+  padding: .75rem 2.25rem;
+}
+
+.collapse__sublink{
+  color: var(--sub-color);
+  font-size: var(--smal-font-size);
+  width:150px;
+  white-space: nowrap;
+}
+
+.collapse__sublink:hover{
+  color: var(--white-color);
+  white-space: nowrap;
+}
+
+.showCollapse{
+  display: block;
+}
+
+.rotate{
+  transform: rotate(180deg);
+}
+
+/* 顶部部件设置 */
+
+.h-navbar{
+  position: relative;
+    /* 100%的窗口宽度 */
+  background-color: var(--white-color);
+  padding: .5rem 0rem .5rem 0rem;
+  transition: 0.5s;
+  z-index: var(--z-fixed);
+}
+
+.head_list{
+  display: fixd;
+  flex-direction: row;
+  justify-content: space-between;
+  /* 溢出隐藏 */
+  overflow: hidden;
+
+}
+
+.h_link{
+  color: var(--bg-color);
+  /* 控制中文字段不能换行，不会因过长进到下一行 */
+  white-space: nowrap;
+}
+/* 点击变色 */
+.h_link:hover{
+  color: var(--sub-color);
+  white-space: nowrap;
+}
+
+.login_link{
+  float: right;
+  padding: 0rem 1.5rem 0rem 0rem;
+  white-space: nowrap;
+}
+
+
+.nav_name{
+  font-size: var(--smal-font-size)
+}
+
+.h_name{
+  margin: 1rem;
+  font-size: 10px;
+  padding: 0 0 0 1rem;
+}
+.m-function{
+  position: fixed;
+  height:  93%;
+  /* 100%的窗口高度 */
+  width: 93%;
+  border: 1rem solid RGB(244,244,244);
+  padding: 1rem 1rem 1rem 1rem;
+  /* 背景板，展示级别为最低优先级 */
+  z-index: -10;
+}
+
+.m_list{
+  position: relative;
+}
+
